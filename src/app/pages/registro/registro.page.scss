@@ -1,0 +1,63 @@
+ion-card-header {
+    display: flex;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center;     /* Centra el contenido verticalmente (opcional) */
+    text-align: center;      /* Centra el texto dentro del ion-card-header */
+    margin-bottom: 16px;
+  }
+
+  ion-button {
+    margin-top: 16px;
+    --background: linear-gradient(to right, #ffcc00, #d32f2f); /* Gradiente de colores */
+    --background-hover: linear-gradient(to right, #e6b800, #b71c1c); /* Color al pasar el ratón */
+  }
+ 
+
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 16px; /* Añadir padding lateral */
+  }
+
+
+  ion-item {
+    margin-bottom: 16px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    box-sizing: border-box;
+  }
+
+  
+  ion-card {
+  width: 100%; 
+  max-width: 400px; /* Tamaño de lo de dentro de la tarjeta  */
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+
+.login-container {
+    width: 100%; 
+    max-width: 5000px; /* Mas pequeña la tarjeta o mas grande */ 
+    display: flex;
+    justify-content: center;
+    margin: auto; 
+    align-items: center;
+    height: 100%; /* Ajusta la altura para que el contenedor ocupe toda la pantalla */
+    padding: 16px; 
+  }
+
+
+.outer-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}

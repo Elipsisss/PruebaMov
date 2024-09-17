@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Registro
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="outer-container">
+    <div class="login-container">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Registrarse</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <form>
+            <ion-item>
+              <ion-input type="email" fill="solid" label="Correo Electrónico" labelPlacement="floating" ngModel name="email"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="text" fill="solid" label="Nombre" labelPlacement="floating" ngModel name="name"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="text" fill="solid" label="Apellido" labelPlacement="floating" ngModel name="lastname"></ion-input>
+            </ion-item>
+
+            <ion-item> 
+              <ion-input type="text" fill="solid" label="RUT" labelPlacement="floating" ngModel name="rut"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="date" labelPlacement="stacked" label="Fecha de Nacimiento" ngModel name="date">  </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="password" fill="solid" label="Contraseña" labelPlacement="floating" ngModel name="password"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input type="rpass" fill="solid" label="Ingrese su contraseña nuevamente" labelPlacement="floating" ngModel name="rpass"></ion-input>
+            </ion-item>
+
+            <ion-button expand="full" type="submit">Registrarse</ion-button>
+            <br> 
+            <p style="text-align:center;">¿Ya tienes cuenta?<a routerLink="/login"> Iniciar sesión</a> </p>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>
