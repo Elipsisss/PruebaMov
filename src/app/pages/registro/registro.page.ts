@@ -13,19 +13,19 @@ export class RegistroPage implements OnInit {
   constructor() {
     this.user = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      name: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      lastname: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      lastname: new FormControl('', [Validators.required, Validators.minLength(3)]),
       rut: new FormControl('', [Validators.required, Validators.pattern(/^\d{6,8}-[kK0-9]$/)]),
       birthdate: new FormControl('', [Validators.required]),
       gender: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       confirmpassword: new FormControl('', [Validators.required])
-    }, { validators: this.passwordMatchValidator }); // Aplica el validador personalizado aquí
+    }, { validators: this.passwordMatchValidator }); 
   }
 
   ngOnInit() {}
 
-  // Validador personalizado para verificar que las contraseñas coincidan
+  // Para que las contraseñas coincidan
   passwordMatchValidator(formGroup: AbstractControl): ValidationErrors | null {
     const password = formGroup.get('password')?.value;
     const confirmPassword = formGroup.get('confirmpassword')?.value;
