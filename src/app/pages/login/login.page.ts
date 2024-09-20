@@ -18,8 +18,9 @@ export class LoginPage implements OnInit {
   }
   
   login() {
-    if (this.email == "usuario01@gmail.com" && this.password =="prueba01") { 
+    if (this.email == "usuario01@duocuc.cl" && this.password =="prueba01") { 
       console.log('INICIO DE SESION CORRECTO');
+      alert("Inicio de sesión correcto");
       this.router.navigate(['/home']);
     } else {
       alert("Correo o contraseña incorrectos");

@@ -12,9 +12,9 @@ export class RegistroPage implements OnInit {
 
   constructor() {
     this.user = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      lastname: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      email: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@duocuc.cl")]),
+      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern("[a-zA-Z]{3,15}")]),
+      lastname: new FormControl('', [Validators.required, Validators.minLength(3),Validators.pattern("[a-zA-Z]{3,15}")]), //se deja solo un apellido dejado, anula los numeros tambien
       rut: new FormControl('', [Validators.required, Validators.pattern(/^\d{6,8}-[kK0-9]$/)]),
       birthdate: new FormControl('', [Validators.required]),
       gender: new FormControl('', [Validators.required]),
@@ -24,17 +24,12 @@ export class RegistroPage implements OnInit {
   }
 
   ngOnInit() {}
-
   // Para que las contraseñas coincidan
   passwordMatchValidator(formGroup: AbstractControl): ValidationErrors | null {
     const password = formGroup.get('password')?.value;
     const confirmPassword = formGroup.get('confirmpassword')?.value;
-  
     return password && confirmPassword && password !== confirmPassword ? { passwordsDoNotMatch: true } : null;
   }
-  
-
-
   
   submit() {
     if (this.user.valid) {
