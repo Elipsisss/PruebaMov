@@ -13,6 +13,17 @@ const routes: Routes = [
   },
   {
     path: 'login',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'registro',
+    redirectTo: 'registro',
+    pathMatch: 'full'
+  },
+
+  {
+    path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },  
   
@@ -22,7 +33,17 @@ const routes: Routes = [
   },  {
     path: 'administration',
     loadChildren: () => import('./pages/administration/administration.module').then( m => m.AdministrationPageModule)
-  }
+  },
+  {
+    path: 'e404',
+    loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)
+  },
+
+  {
+    path: '**',
+    redirectTo: 'e404',
+    pathMatch: 'full'
+  },
 ]
 
 ;
