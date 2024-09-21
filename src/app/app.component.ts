@@ -15,6 +15,10 @@ export class AppComponent {
   }
   perfil(){
     this.menu.close();
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
+  }
+  administrar(){
+    this.menu.close();
+    this.router.navigate(['/administration']);
   }
 }

@@ -1,58 +1,62 @@
+ion-content {
+  --background: linear-gradient(to right, rgb(0, 0, 0), rgb(255, 204, 0), rgb(234, 87, 8));
+}
+
+ion-card {
+  background-color: rgba(245, 246, 247, 0.9);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 600px; /* Limita el ancho máximo del card */
+}
+
 ion-card-header {
-  display: flex;
-  justify-content: center; /* Centra el contenido horizontalmente */
-  align-items: center;     /* Centra el contenido verticalmente (opcional) */
-  text-align: center;      /* Centra el texto dentro del ion-card-header */
-  margin-bottom: 16px;
+  background-color: rgba(234, 179, 8, 0.2);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  padding: 10px 0; /* Agrega espacio interno para el header */
+}
+
+ion-card-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 24px;
+  color: #000; 
+}
+
+ion-input, ion-select, ion-radio-group {
+  margin-bottom: 20px; /* Espacio entre campos */
+}
+
+ion-label {
+  margin-bottom: 10px; /* Espacio debajo de las etiquetas */
 }
 
 ion-button {
-  margin-top: 16px;
-  --background: linear-gradient(to right, #ffcc00, #d32f2f); /* Gradiente de colores */
-  --background-hover: linear-gradient(to right, #e6b800, #b71c1c); /* Color al pasar el ratón */
+  width: 100%;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  padding: 12px;
+  margin-top: 20px;
+  color: #fff; 
+  background-color: rgb(215, 44, 18);
+  border: none; /* Elimina el borde predeterminado */
+  border-radius: 5px; /* Agrega bordes redondeados */
 }
 
-
-form {
+ion-radio-group {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 0 16px; /* Añadir padding lateral */
 }
-
 
 ion-item {
-  margin-bottom: 16px;
-  --padding-start: 16px;
-  --padding-end: 16px;
-  box-sizing: border-box;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: rgba(245, 246, 247, 0.8);
+  padding: 10px;
 }
 
-
-ion-card {
-width: 100%; 
-max-width: 400px; /* Tamaño de lo de dentro de la tarjeta  */
-border-radius: 8px;
-display: flex;
-flex-direction: column;
-align-items: center;
-box-sizing: border-box;
-overflow: hidden;
-}
-
-
-
-
-#ee{
-  margin-top: 16px;
-  --background: linear-gradient(to right, #f1ba41, #dd9962); /* Gradiente de colores, de izquierda a derecha van los colores */
-}
-
-
-ion-list {
-  border-radius: 8px;
-  box-sizing: border-box;
-  margin: 16px; // Para el margen en el borde 
-
-
+ion-radio {
+  --color-checked: rgb(236, 72, 153);
+  --color-checked-disabled: rgb(236, 72, 153);
 }
