@@ -1,3 +1,12 @@
+.imagen-logo {
+  text-align: center; 
+}
+
+.logo {
+  max-width: 300px; /* tamaño de la imagen */
+  height: auto; /* proporcion imagen */
+}
+
 ion-card-header {
     display: flex;
     justify-content: center; /* Centra el contenido horizontalmente */
@@ -30,36 +39,38 @@ ion-card-header {
 
   
   ion-card {
-  width: 100%; 
-  max-width: 400px; /* Tamaño de lo de dentro de la tarjeta  */
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-
-
-.login-container {
     width: 100%; 
-    max-width: 5000px; /* Mas pequeña la tarjeta o mas grande */ 
+    max-width: 600px; 
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 17px auto; /* Centrado horizontal */
+    max-height: 2000px; /* TAMAÑO DEL FORMULARIO (ENTRE MAS CAMPOS, MAS SE DEBE DE AUMENTAR, O INGRESAR UN OVERFLOW-Y:**************) */
+    
+  }
+  
+
+  .login-container {
+    width: 100%; 
+    max-width: 500px; /* tamaño tarjeta hacia los lados */ 
     display: flex;
     justify-content: center;
     margin: auto; 
     align-items: center;
-    height: 100%; /* Ajusta la altura para que el contenedor ocupe toda la pantalla */
+    height: auto; /* Cambia a auto para ajustarse al contenido */
     padding: 16px; 
   }
 
 
-.outer-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  padding: 10px;
-}
-
+  .outer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 1000px; /* Ocupa toda la altura de la ventana */
+    padding: 10px;
+    margin-bottom:5px;
+  }
 

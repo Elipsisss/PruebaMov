@@ -3,24 +3,24 @@
   
   .imagen-logo {
     display: flex;
-    justify-content: center; /* Centra horizontalmente dentro del contenedor */
-    align-items: center; /* Centra verticalmente dentro del contenedor */
-    width: 100%; /* Asegura que el contenedor ocupe el ancho completo del ion-content */
-    height: 100%; /* Asegura que el contenedor ocupe la altura completa del ion-content */
+    justify-content: center; 
+    align-items: center;
+    width: 100%; 
+    height: 100%; 
   }
   
   .logo {
-    max-width: 400px; /* Ajusta el tamaño máximo deseado para la imagen */
-    height: auto; /* Mantiene la proporción de aspecto */
+    max-width: 400px; /*  tamaño   imagen */
+    height: auto; /*   proporción de aspecto (no mover) */
   }
 
 
 
   ion-card-header {
     display: flex;
-    justify-content: center; /* Centra el contenido horizontalmente */
-    align-items: center;     /* Centra el contenido verticalmente (opcional) */
-    text-align: center;      /* Centra el texto dentro del ion-card-header */
+    justify-content: center; 
+    align-items: center;     
+    text-align: center;      
     margin-bottom: 16px;
   }
 
@@ -50,7 +50,6 @@
   width: 100%; 
   max-width: 400px; /* Tamaño de lo de dentro de la tarjeta  */
   border-radius: 8px;
- 
   display: flex;
   flex-direction: column;
   align-items: center;
