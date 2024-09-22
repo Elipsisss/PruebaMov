@@ -29,7 +29,7 @@ export class RegistroPage implements OnInit {
       confirmpassword: new FormControl('', [Validators.required])
     }, { validators: this.passwordMatchValidator }); 
   }
-
+  
   
 
   marcaAuto: string[] = [
@@ -65,16 +65,6 @@ export class RegistroPage implements OnInit {
       return { marcaNoExiste: true };
     }
     return null;
-  }
-
-  async registrar() {
-    if (this.usuarioService.createUsuario(this.user.value)) {
-      await this.presentAlert('Perfecto!', 'Registrado correctamente');
-      this.user.reset();
-      this.usuario = this.usuarioService.getUsuarios();
-    } else {
-      await this.presentAlert('Error!', 'El usuario no se pudo registrar');
-    }
   }
 
 
@@ -115,7 +105,6 @@ export class RegistroPage implements OnInit {
   async submit() {
     if (this.user.valid) {
       await this.presentAlert('Perfecto!', 'Registrado correctamente');
-      alert('Formulario valido')
       this.user.reset();
     } else {
       await this.presentAlert('Error!', 'El usuario no se pudo registrar');

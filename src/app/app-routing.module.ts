@@ -34,6 +34,16 @@ const routes: Routes = [
     path: 'administration',
     loadChildren: () => import('./pages/administration/administration.module').then( m => m.AdministrationPageModule)
   },
+
+  {
+    path: 'perfil',
+    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+
+
+
+
+
   {
     path: 'e404',
     loadChildren: () => import('./pages/e404/e404.module').then( m => m.E404PageModule)

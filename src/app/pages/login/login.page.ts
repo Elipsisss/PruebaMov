@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -12,20 +13,36 @@ export class LoginPage implements OnInit {
   email: string ="";
   password: string="";
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private alertController: AlertController) { }
 
   ngOnInit() {
   }
+
+
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
   
-  login() {
+  async login() {
     if (this.email == "usuario01@duocuc.cl" && this.password =="prueba01") { 
-      console.log('INICIO DE SESION CORRECTO');
-      alert("Inicio de sesión correcto");
       this.router.navigate(['/home']);
     } else {
-      alert("Correo o contraseña incorrectos");
+      await this.presentAlert('Correo o contraseña incorrectos!','');
     }
   }
+
+
+
+
+
+
+
      
 
 }
