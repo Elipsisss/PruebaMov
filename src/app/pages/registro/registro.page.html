@@ -1,18 +1,17 @@
 <ion-header>
   <ion-toolbar>
+    <!-- Botón de retroceso -->
+    <ion-buttons slot="start">
+      <ion-back-button routerLink="/login"></ion-back-button>
+    </ion-buttons>
     <ion-title> Registro </ion-title>
   </ion-toolbar>
 </ion-header>
 
-
-
 <ion-content>
   <div class="imagen-logo">
-      <img src="assets/uberduc.jfif.png" alt="Auto-logo" class="logo" />
-    </div>
-    
-
-
+    <img src="assets/uberduc.jfif.png" alt="Auto-logo" class="logo" />
+  </div>
 
   <div class="outer-container">
     <div class="login-container">
@@ -24,35 +23,41 @@
         <ion-card-content>
           <form [formGroup]="user" (ngSubmit)="submit()">
             <ion-item>
-              <ion-input id="email" formControlName="email" type="text" fill="solid" label="Correo Electrónico" labelPlacement="floating"></ion-input>
+              <ion-input id="email" formControlName="email" type="text" fill="solid" label="Correo Electrónico"
+                labelPlacement="floating"></ion-input>
             </ion-item>
             <ion-item *ngIf="user.get('email')?.invalid && (user.get('email')?.touched || user.get('email')?.dirty)">
               <ion-label color="danger">Correo electrónico inválido</ion-label>
             </ion-item>
 
             <ion-item>
-              <ion-input id="name" formControlName="name" type="text" fill="solid" label="Nombre" labelPlacement="floating"></ion-input>
+              <ion-input id="name" formControlName="name" type="text" fill="solid" label="Nombre"
+                labelPlacement="floating"></ion-input>
             </ion-item>
             <ion-item *ngIf="user.get('name')?.invalid && (user.get('name')?.touched || user.get('name')?.dirty)">
               <ion-label color="danger">Nombre inválido</ion-label>
             </ion-item>
 
             <ion-item>
-              <ion-input id="lastname" formControlName="lastname" type="text" fill="solid" label="Apellido" labelPlacement="floating"></ion-input>
+              <ion-input id="lastname" formControlName="lastname" type="text" fill="solid" label="Apellido"
+                labelPlacement="floating"></ion-input>
             </ion-item>
-            <ion-item *ngIf="user.get('lastname')?.invalid && (user.get('lastname')?.touched || user.get('lastname')?.dirty)">
+            <ion-item
+              *ngIf="user.get('lastname')?.invalid && (user.get('lastname')?.touched || user.get('lastname')?.dirty)">
               <ion-label color="danger">Apellido inválido</ion-label>
             </ion-item>
 
             <ion-item>
-              <ion-input id="rut" formControlName="rut" type="text" fill="solid" label="RUT" labelPlacement="floating"></ion-input>
+              <ion-input id="rut" formControlName="rut" type="text" fill="solid" label="RUT"
+                labelPlacement="floating"></ion-input>
             </ion-item>
             <ion-item *ngIf="user.get('rut')?.invalid && (user.get('rut')?.touched || user.get('rut')?.dirty)">
               <ion-label color="danger">Rut inválido, debe de ingresar guión y el número verificador</ion-label>
             </ion-item>
 
             <ion-item>
-              <ion-input id="birthdate" formControlName="birthdate" type="date" fill="solid" labelPlacement="floating" label="Fecha de Nacimiento"></ion-input>
+              <ion-input id="birthdate" formControlName="birthdate" type="date" fill="solid" labelPlacement="floating"
+                label="Fecha de Nacimiento"></ion-input>
             </ion-item>
 
             <ion-label>¿Tiene Auto?</ion-label>
@@ -73,17 +78,20 @@
                   <ion-card-title>Detalles del Auto</ion-card-title>
                 </ion-card-header>
                 <ion-card-content>
-                  <ion-input formControlName="marca_auto" type="text" label="Marca Auto" labelPlacement="floating" fill="solid"></ion-input>
+                  <ion-input formControlName="marca_auto" type="text" label="Marca Auto" labelPlacement="floating"
+                    fill="solid"></ion-input>
                   <ion-text *ngIf="user.controls['marca_auto'].errors?.['marcaNoExiste']">
                     <p>La marca ingresada no existe en el sistema.</p>
                   </ion-text>
 
-                  <ion-input formControlName="patente" type="text" label="Patente" labelPlacement="floating" fill="solid"></ion-input>
+                  <ion-input formControlName="patente" type="text" label="Patente" labelPlacement="floating"
+                    fill="solid"></ion-input>
                   <ion-text color="danger" *ngIf="user.controls['patente'].errors?.['pattern']">
                     <p>La patente debe ser válida (formato: AB1234 o ABCD12).</p>
                   </ion-text>
 
-                  <ion-input formControlName="asientos_disp" type="number" label="Asientos Disp." labelPlacement="floating" fill="solid"></ion-input>
+                  <ion-input formControlName="asientos_disp" type="number" label="Asientos Disp."
+                    labelPlacement="floating" fill="solid"></ion-input>
                 </ion-card-content>
               </ion-card>
             </ion-col>
@@ -97,11 +105,13 @@
             </ion-item>
 
             <ion-item>
-              <ion-input id="password" formControlName="password" type="password" fill="solid" label="Contraseña" labelPlacement="floating"></ion-input>
+              <ion-input id="password" formControlName="password" type="password" fill="solid" label="Contraseña"
+                labelPlacement="floating"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-input id="confirmpassword" formControlName="confirmpassword" type="password" fill="solid" label="Ingrese su contraseña nuevamente" labelPlacement="floating"></ion-input>
+              <ion-input id="confirmpassword" formControlName="confirmpassword" type="password" fill="solid"
+                label="Ingrese su contraseña nuevamente" labelPlacement="floating"></ion-input>
             </ion-item>
             <ion-item *ngIf="user.hasError('passwordsDoNotMatch')">
               <ion-label color="danger">Las contraseñas no coinciden</ion-label>

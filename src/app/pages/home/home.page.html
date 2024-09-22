@@ -1,6 +1,17 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-menu-button slot="start"></ion-menu-button>
+  <ion-toolbar color="light"> <!-- Cambié el color del toolbar -->
+    <ion-menu-button color="dark" slot="start"></ion-menu-button>
+    <ion-title>Inicio</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<ion-content style="--background: linear-gradient(to bottom right, #000000, #000000);"> <!-- Fondo degradado -->
+  <div style="text-align: center; padding: 20px;">
+    <img src="../assets/uberduc.jfif.png" alt="Logo" style="max-width: 150px; border-radius: 50%;"> <!-- Imagen circular -->
+    <h1 style="color: white; font-family: Arial, sans-serif;">Bienvenido a UberDWC</h1>
+    <p style="color: #f0f0f0; font-size: 18px;">Con los mejores precios en viajes</p>
+
+    <ion-button expand="block" color="warning" style="margin-top: 20px;" [routerLink]="'/login'">Empieza tu viaje</ion-button>
+    <ion-button expand="block" color="light" style="margin-top: 10px;">Más información</ion-button>
+  </div>
+</ion-content>
