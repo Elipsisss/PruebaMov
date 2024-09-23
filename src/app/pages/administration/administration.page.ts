@@ -10,8 +10,9 @@ import { UsuarioService } from 'src/app/services/usuario-service.service';
 })
 export class AdministrationPage  implements OnInit {
   persona = new FormGroup({
-    rut: new FormControl('', [Validators.required, Validators.pattern("[0-9]{7,8}-[0-9kK]{1}")]),
     nombre: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z]{3,15}")]),
+    apellido: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z]{3,15}")]),
+    rut: new FormControl('', [Validators.required, Validators.pattern("[0-9]{7,8}-[0-9kK]{1}")]),
     fecha_nacimiento: new FormControl('', [Validators.required, this.anosvalidar(18, 100)]),
     correo: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@duocuc.cl")]),
     password: new FormControl('', [Validators.required, Validators.minLength(4)]),
@@ -21,7 +22,7 @@ export class AdministrationPage  implements OnInit {
     tipouser: new FormControl('usuario', [Validators.required]),
     marca_auto: new FormControl('', [this.validarMarcaAuto.bind(this)]),
     patente: new FormControl('', [Validators.pattern(/^[A-Z]{2}[0-9]{4}$|^[A-Z]{4}[0-9]{2}$/)]),
-    asientos_disp: new FormControl('', [Validators.required, Validators.min(1)]),
+    asientos_disp: new FormControl('', [Validators.min(1)]),
   });
 
   usuarios: any[] = [];
@@ -47,11 +48,11 @@ export class AdministrationPage  implements OnInit {
 
   async registrar() {
     if (this.usuarioService.createUsuario(this.persona.value)) {
-      await this.presentAlert('Perfecto!', 'Registrado correctamente');
+      await this.presentAlert('Perfecto', 'Registrado correctamente');
       this.persona.reset();
       this.usuarios = this.usuarioService.getUsuarios();
     } else {
-      await this.presentAlert('Error!', 'El usuario no se pudo registrar');
+      await this.presentAlert('Error', 'El usuario no se pudo registrar');
     }
   }
 
@@ -73,8 +74,6 @@ export class AdministrationPage  implements OnInit {
       this.presentAlert('Error!', 'No se pudo modificar');
     }
   }
-
-  // Validador personalizado para edad
   anosvalidar(minAge: number, maxAge: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const birthDate = new Date(control.value);
@@ -102,7 +101,7 @@ export class AdministrationPage  implements OnInit {
     const alert = await this.alertController.create({
       header: header,
       message: message,
-      buttons: ['OK'],
+      buttons: ['Entendido'],
     });
     await alert.present();
   }

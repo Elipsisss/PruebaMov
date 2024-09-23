@@ -5,8 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class UsuarioService {
   usuarios: any[] = [];
-  private usuarioAutenticado: any = null; // Añadir propiedad para el usuario autenticado
-
+  private usuarioAutenticado: any = null;
   constructor() { }
 
   public createUsuario(usuario: any): boolean {
@@ -44,17 +43,17 @@ export class UsuarioService {
   }
 
   public authenticate(email: string, password: string): boolean {
-    console.log('Verificando:', email, password); // Depuración
+    console.log('Verificando:', email, password);
     const usuario = this.usuarios.find(user => user.correo === email && user.password === password);
     if (usuario) {
-      this.usuarioAutenticado = usuario; // Establecer usuario autenticado
+      this.usuarioAutenticado = usuario;
       return true;
     }
     return false;
   }
 
   public getUsuarioAutenticado() {
-    return this.usuarioAutenticado; // Obtener usuario autenticado
+    return this.usuarioAutenticado;
   }
 
   public logUsuarios() {

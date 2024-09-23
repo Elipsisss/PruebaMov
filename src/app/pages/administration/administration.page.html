@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-menu-button slot="start"></ion-menu-button>
-    <ion-title>Administrar Usuarios</ion-title>
+    <ion-title>Administracion</ion-title>
     <ion-buttons slot="start">
     </ion-buttons>
   </ion-toolbar>
@@ -13,12 +13,13 @@
       <ion-col size="12" size-md="6">
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Información Personal!</ion-card-title>
+            <ion-card-title>Información Personal</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <br>
             <form [formGroup]="persona" (ngSubmit)="registrar()">
-              <ion-input formControlName="nombre" type="text" labelPlacement="stacked" label="Nombre y Apellido" fill="outline"></ion-input>
+              <ion-input formControlName="nombre" type="text" labelPlacement="stacked" label="Nombre" fill="outline"></ion-input>
+              <ion-input formControlName="apellido" type="text" labelPlacement="stacked" label="Apellido" fill="outline"></ion-input>
 
               <ion-input formControlName="rut" placeholder="Sin punto con guion" type="text" labelPlacement="stacked" label="RUT" fill="outline"></ion-input>
               <ion-label position="stacked">Fecha de Nacimiento</ion-label><ion-input formControlName="fecha_nacimiento" type="date"  fill="outline"></ion-input>
@@ -37,6 +38,8 @@
               <ion-select formControlName="sede" label="Sede Duoc" labelPlacement="stacked" fill="outline">
                 <ion-select-option value="alameda">Alameda</ion-select-option>
                 <ion-select-option value="antonio_varas">Antonio Varas</ion-select-option>
+                <ion-select-option value="arauco">Arauco</ion-select-option>
+                <ion-select-option value="concepcion">Concepción</ion-select-option>
                 <ion-select-option value="maipu">Maipú</ion-select-option>
                 <ion-select-option value="melipilla">Melipilla</ion-select-option>
                 <ion-select-option value="padre_alonso">Padre Alonso de Ovalle</ion-select-option>
@@ -49,8 +52,6 @@
                 <ion-select-option value="san_joaquin">San Joaquín</ion-select-option>
                 <ion-select-option value="valparaiso">Valparaíso</ion-select-option>
                 <ion-select-option value="vina_del_mar">Viña del Mar</ion-select-option>
-                <ion-select-option value="concepcion">Concepción</ion-select-option>
-                <ion-select-option value="arauco">Arauco</ion-select-option>
                 <ion-select-option value="villarica">Villarica</ion-select-option>
                 <ion-select-option value="puerto_montt">Puerto Montt</ion-select-option>
               </ion-select>
@@ -59,11 +60,11 @@
               
               <ion-radio-group formControlName="tiene_auto">
                 <ion-item>
-                  <ion-radio slot="start" value="si"></ion-radio>
+                  <ion-radio slot="start" value="Si"></ion-radio>
                   <ion-label>Sí</ion-label>
                 </ion-item>
                 <ion-item>
-                  <ion-radio slot="start" value="no"></ion-radio>
+                  <ion-radio slot="start" value="No"></ion-radio>
                   <ion-label>No</ion-label>
                 </ion-item>
               </ion-radio-group>
@@ -108,8 +109,6 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-
-      <!-- Columna de derecha -->
       <ion-col size="12">
         <ion-card>
           <ion-card-header>
@@ -119,7 +118,7 @@
             <ion-list>
               <ion-item-sliding *ngFor="let usuario of usuarios">
                 <ion-item>
-                  {{ usuario.rut }} - {{ usuario.nombre }} - Tiene auto: {{ usuario.tiene_auto }}
+                 Rut: {{ usuario.rut }} | Nombre: {{ usuario.nombre }} {{usuario.apellido }} | Auto: {{ usuario.tiene_auto }}
                 </ion-item>
                 <ion-item-options side="end">
                   <ion-item-option (click)="buscar(usuario)">
