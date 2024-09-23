@@ -23,7 +23,14 @@
       <ion-list>
         <ion-item lines="full" (click)="home()">
           Home
-          <ion-icon slot="end" name="home" color="dark"></ion-icon> <!-- Ícono alineado a la derecha -->
+          <ion-icon slot="end" name="home" color="dark"></ion-icon> 
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-item lines="full" (click)="viaje()">
+          Viaje
+          <ion-icon slot="end" name="car" color="dark"></ion-icon> 
         </ion-item>
       </ion-list>
 
@@ -32,6 +39,7 @@
           Salir Sesión
           <ion-icon slot="end" name="log-out-outline" color="dark"></ion-icon> <!-- Ícono alineado a la derecha -->
         </ion-item>
+
       </ion-list>
     </ion-content>
   </ion-menu>

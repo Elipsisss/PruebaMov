@@ -13,16 +13,16 @@ export class AdministrationPage  implements OnInit {
     nombre: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z]{3,15}")]),
     apellido: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z]{3,15}")]),
     rut: new FormControl('', [Validators.required, Validators.pattern("[0-9]{7,8}-[0-9kK]{1}")]),
-    fecha_nacimiento: new FormControl('', [Validators.required, this.anosvalidar(18, 100)]),
+    fecha_nacimiento: new FormControl('', [Validators.required, this.anios(18, 100)]),
     correo: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@duocuc.cl")]),
     password: new FormControl('', [Validators.required, Validators.minLength(4)]),
     genero: new FormControl('', [Validators.required]),
     sede: new FormControl('', [Validators.required]),
-    tiene_auto: new FormControl('no', [Validators.required]),
-    tipouser: new FormControl('usuario', [Validators.required]),
+    tiene_auto: new FormControl('', [Validators.required]),
+    tipouser: new FormControl('', [Validators.required]),
     marca_auto: new FormControl('', [this.validarMarcaAuto.bind(this)]),
-    patente: new FormControl('', [Validators.pattern(/^[A-Z]{2}[0-9]{4}$|^[A-Z]{4}[0-9]{2}$/)]),
-    asientos_disp: new FormControl('', [Validators.min(1)]),
+    patente: new FormControl('', [Validators.pattern(/^[A-Z]{4}[0-9]{2}$/)]),
+    asientos_disp: new FormControl('', [Validators.min(1),Validators.max(8)]),
   });
 
   usuarios: any[] = [];
@@ -74,7 +74,8 @@ export class AdministrationPage  implements OnInit {
       this.presentAlert('Error!', 'No se pudo modificar');
     }
   }
-  anosvalidar(minAge: number, maxAge: number): ValidatorFn {
+  
+  anios(minAge: number, maxAge: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const birthDate = new Date(control.value);
       const today = new Date();

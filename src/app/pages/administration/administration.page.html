@@ -60,7 +60,7 @@
               
               <ion-radio-group formControlName="tiene_auto">
                 <ion-item>
-                  <ion-radio slot="start" value="Si"></ion-radio>
+                  <ion-radio slot="start" value="si"></ion-radio>
                   <ion-label>Sí</ion-label>
                 </ion-item>
                 <ion-item>
@@ -97,12 +97,12 @@
             <form [formGroup]="persona" (ngSubmit)="registrar()">
               <ion-input formControlName="marca_auto" type="text" label="Marca Auto" labelPlacement="stacked" fill="outline"></ion-input>
               <ion-text *ngIf="persona.controls.marca_auto.errors?.['marcaNoExiste']">
-                <p>La marca ingresada no existe en el sistema :C.</p>
+                <p></p>
               </ion-text>
               
               <ion-input formControlName="patente" type="text" label="Patente" labelPlacement="stacked" fill="outline"></ion-input>
               <ion-text color="danger" *ngIf="persona.controls.patente.errors?.['pattern']">
-                <p>La patente debe ser válida (formato: AB1234 o ABCD12).</p>
+                <p>La patente debe ser válida (formato:ABCD12)</p>
               </ion-text>
               <ion-input formControlName="asientos_disp" type="number" label="Asientos Disp." labelPlacement="stacked" fill="outline"></ion-input>
             </form>
@@ -118,7 +118,9 @@
             <ion-list>
               <ion-item-sliding *ngFor="let usuario of usuarios">
                 <ion-item>
-                 Rut: {{ usuario.rut }} | Nombre: {{ usuario.nombre }} {{usuario.apellido }} | Auto: {{ usuario.tiene_auto }}
+                    <p>Rut: {{ usuario.rut }} </p>
+                    <p>Nombre: {{ usuario.nombre }} {{usuario.apellido }} </p>
+                    <p>Auto: {{ usuario.tiene_auto }}</p>
                 </ion-item>
                 <ion-item-options side="end">
                   <ion-item-option (click)="buscar(usuario)">

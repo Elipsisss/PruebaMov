@@ -22,6 +22,11 @@ export class AppComponent {
     this.menu.close();
     this.router.navigate(['/home']);
   }
+
+  viaje(){
+    this.menu.close();
+    this.router.navigate(['/viaje']);
+  }
   administrar(){
     this.menu.close();
     this.router.navigate(['/administration']);
