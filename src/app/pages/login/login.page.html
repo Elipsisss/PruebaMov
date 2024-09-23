@@ -1,16 +1,5 @@
-<ion-header>
-  <ion-toolbar>
-    <!-- Botón de retroceso -->
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
-    <ion-title>
-      Inicio de Sesión
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
+<ion-content >
   <div class="outer-container">
     <!-- Imagen del logo -->
     <div class="imagen-logo">
@@ -31,6 +20,7 @@
             <ion-item>
               <ion-input [(ngModel)]="password" id="password" name="password" type="password" fill="solid" label="Contraseña" labelPlacement="floating"></ion-input>
             </ion-item>
+            <a style="text-align:center;" routerLink="/recuperacion"> Olvide mi contraseña </a>
             <ion-button expand="full" type="submit">Iniciar Sesión</ion-button>
           </form>
           <br>

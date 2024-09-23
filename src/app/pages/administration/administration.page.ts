@@ -21,7 +21,7 @@ export class AdministrationPage  implements OnInit {
     tipouser: new FormControl('usuario', [Validators.required]),
     marca_auto: new FormControl('', [this.validarMarcaAuto.bind(this)]),
     patente: new FormControl('', [Validators.pattern(/^[A-Z]{2}[0-9]{4}$|^[A-Z]{4}[0-9]{2}$/)]),
-    asientos_disp: new FormControl('', []),
+    asientos_disp: new FormControl('', [Validators.required, Validators.min(1)]),
   });
 
   usuarios: any[] = [];
