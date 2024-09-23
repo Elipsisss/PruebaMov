@@ -4,9 +4,9 @@ Buenos dias profesor este es el proyecto de la primera evaluacion el cual consta
   Joaquin Riquelme
 
 Pasos Basicos y necesarios:
-  Instalar node.js
+  Instalar node.js|
     Link = https://nodejs.org/en
-  Instalar en el bash Ionic
+  Instalar en el bash Ionic|
     Link = https://ionicframework.com/
   
 Clonar el repositorio:
