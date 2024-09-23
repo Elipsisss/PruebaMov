@@ -1,8 +1,3 @@
-Buenos dias profesor este es el proyecto de la primera evaluacion el cual consta de 3 integrantes los cuales son:
-  Diego Alcaino 
-  Danery Arriagada
-  Joaquin Riquelme
-
 Pasos Basicos y necesarios:
   Instalar node.js
     Link = https://nodejs.org/en
