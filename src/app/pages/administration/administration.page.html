@@ -18,24 +18,24 @@
           <ion-card-content>
             <br>
             <form [formGroup]="persona" (ngSubmit)="registrar()">
-              <ion-input formControlName="nombre" type="text" labelPlacement="stacked" label="Nombre" fill="outline"></ion-input>
-              <ion-input formControlName="apellido" type="text" labelPlacement="stacked" label="Apellido" fill="outline"></ion-input>
+              <ion-input formControlName="nombre" type="text" label="Nombre" fill="solid" labelPlacement="floating"></ion-input>
+              <ion-input formControlName="apellido" type="text" fill="solid" labelPlacement="floating" label="Apellido" ></ion-input>
 
-              <ion-input formControlName="rut" placeholder="Sin punto con guion" type="text" labelPlacement="stacked" label="RUT" fill="outline"></ion-input>
-              <ion-label position="stacked">Fecha de Nacimiento</ion-label><ion-input formControlName="fecha_nacimiento" type="date"  fill="outline"></ion-input>
+              <ion-input formControlName="rut" placeholder="Sin punto con guion" type="text" fill="solid" labelPlacement="floating" label="RUT" ></ion-input>
+              <ion-label position="stacked">Fecha de Nacimiento</ion-label><ion-input formControlName="fecha_nacimiento" type="date"  fill="solid"></ion-input>
                 <ion-note slot="end" color="danger" *ngIf="persona.controls.fecha_nacimiento.errors?.['invalidAge']">
                   Debes ser mayor de 18 años.
                 </ion-note>
-              <ion-input formControlName="correo" placeholder="@duocuc.cl" type="email" label="Correo" labelPlacement="stacked" fill="outline"></ion-input>
-              <ion-input formControlName="password" placeholder="Mayor a 4 digitos" type="password" label="Password" labelPlacement="stacked" fill="outline"></ion-input>
+              <ion-input formControlName="correo" placeholder="@duocuc.cl" type="email" label="Correo" fill="solid" labelPlacement="floating"></ion-input>
+              <ion-input formControlName="password" placeholder="Mayor a 4 digitos" type="password" label="Password"fill="solid" labelPlacement="floating"></ion-input>
               
-              <ion-select formControlName="genero" label="Genero" labelPlacement="stacked" fill="outline">
+              <ion-select formControlName="genero" label="Genero" labelPlacement="stacked" fill="solid">
                 <ion-select-option value="masculino">Masculino</ion-select-option>
                 <ion-select-option value="femenino">Femenino</ion-select-option>
                 <ion-select-option value="otro">Otro</ion-select-option>
               </ion-select>
               
-              <ion-select formControlName="sede" label="Sede Duoc" labelPlacement="stacked" fill="outline">
+              <ion-select formControlName="sede" label="Sede Duoc" labelPlacement="stacked" fill="solid">
                 <ion-select-option value="alameda">Alameda</ion-select-option>
                 <ion-select-option value="antonio_varas">Antonio Varas</ion-select-option>
                 <ion-select-option value="arauco">Arauco</ion-select-option>
@@ -67,6 +67,29 @@
                   <ion-radio slot="start" value="No"></ion-radio>
                   <ion-label>No</ion-label>
                 </ion-item>
+                
+                <ion-col size="12" size-md="6" *ngIf="persona.controls.tiene_auto.value === 'si'">
+                  <ion-card class = "auto-details-card">
+                    <ion-card-header>
+                      <ion-card-title>Detalles del Auto</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <form [formGroup]="persona" (ngSubmit)="registrar()">
+                        <ion-input formControlName="marca_auto" type="text" label="Marca Auto" labelPlacement="stacked" fill="outline"></ion-input>
+                        <ion-text *ngIf="persona.controls.marca_auto.errors?.['marcaNoExiste']">
+                          <p></p>
+                        </ion-text>
+                        
+                        <ion-input formControlName="patente" type="text" label="Patente" labelPlacement="stacked" fill="outline"></ion-input>
+                        <ion-text color="danger" *ngIf="persona.controls.patente.errors?.['pattern']">
+                          <p>La patente debe ser válida (formato:ABCD12)</p>
+                        </ion-text>
+                        <ion-input formControlName="asientos_disp" type="number" label="Asientos Disp." labelPlacement="stacked" fill="outline"></ion-input>
+                      </form>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+          
               </ion-radio-group>
               <br>
               <ion-label>Tipo de usuario</ion-label>
@@ -88,27 +111,9 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="12" size-md="6" *ngIf="persona.controls.tiene_auto.value === 'si'">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Detalles del Auto</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <form [formGroup]="persona" (ngSubmit)="registrar()">
-              <ion-input formControlName="marca_auto" type="text" label="Marca Auto" labelPlacement="stacked" fill="outline"></ion-input>
-              <ion-text *ngIf="persona.controls.marca_auto.errors?.['marcaNoExiste']">
-                <p></p>
-              </ion-text>
-              
-              <ion-input formControlName="patente" type="text" label="Patente" labelPlacement="stacked" fill="outline"></ion-input>
-              <ion-text color="danger" *ngIf="persona.controls.patente.errors?.['pattern']">
-                <p>La patente debe ser válida (formato:ABCD12)</p>
-              </ion-text>
-              <ion-input formControlName="asientos_disp" type="number" label="Asientos Disp." labelPlacement="stacked" fill="outline"></ion-input>
-            </form>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
+
+
+      
       <ion-col size="12">
         <ion-card>
           <ion-card-header>
@@ -118,7 +123,7 @@
             <ion-list>
               <ion-item-sliding *ngFor="let usuario of usuarios">
                 <ion-item>
-                    <p>Rut: {{ usuario.rut }} </p>
+                    <p>Rut: {{ usuario.rut }}  </p>
                     <p>Nombre: {{ usuario.nombre }} {{usuario.apellido }} </p>
                     <p>Auto: {{ usuario.tiene_auto }}</p>
                 </ion-item>
