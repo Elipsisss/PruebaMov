@@ -67,7 +67,7 @@
                   <ion-radio slot="start" value="No"></ion-radio>
                   <ion-label>No</ion-label>
                 </ion-item>
-                
+
                 <ion-col size="12" size-md="6" *ngIf="persona.controls.tiene_auto.value === 'si'">
                   <ion-card class = "auto-details-card">
                     <ion-card-header>
@@ -75,16 +75,16 @@
                     </ion-card-header>
                     <ion-card-content>
                       <form [formGroup]="persona" (ngSubmit)="registrar()">
-                        <ion-input formControlName="marca_auto" type="text" label="Marca Auto" labelPlacement="stacked" fill="outline"></ion-input>
+                        <ion-input formControlName="marca_auto" type="text" label="Marca Auto" fill="solid" labelPlacement="floating"></ion-input>
                         <ion-text *ngIf="persona.controls.marca_auto.errors?.['marcaNoExiste']">
                           <p></p>
                         </ion-text>
                         
-                        <ion-input formControlName="patente" type="text" label="Patente" labelPlacement="stacked" fill="outline"></ion-input>
+                        <ion-input formControlName="patente" type="text" label="Patente" fill="solid" labelPlacement="floating"></ion-input>
                         <ion-text color="danger" *ngIf="persona.controls.patente.errors?.['pattern']">
                           <p>La patente debe ser válida (formato:ABCD12)</p>
                         </ion-text>
-                        <ion-input formControlName="asientos_disp" type="number" label="Asientos Disp." labelPlacement="stacked" fill="outline"></ion-input>
+                        <ion-input formControlName="asientos_disp" type="number" label="Asientos Disp." fill="solid" labelPlacement="floating"></ion-input>
                       </form>
                     </ion-card-content>
                   </ion-card>
