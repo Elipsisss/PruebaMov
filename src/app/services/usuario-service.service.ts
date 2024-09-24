@@ -4,8 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UsuarioService {
-  usuarios: any[] = [];
+  private usuarios: any[] = [
+    { email: 'usuario01@duocuc.cl', password: 'prueba01', isAdmin: true } // Admin de prueba
+  ];
   private usuarioAutenticado: any = null;
+
   constructor() { }
 
   public createUsuario(usuario: any): boolean {
@@ -14,6 +17,10 @@ export class UsuarioService {
       return true;
     }
     return false;
+  }
+  
+  public isUsuarioAdmin(): boolean {
+    return this.usuarioAutenticado?.isAdmin || false;
   }
 
   public getUsuario(rut: string) {
@@ -42,9 +49,10 @@ export class UsuarioService {
     return true;
   }
 
+  // Método para autenticar al usuario
   public authenticate(email: string, password: string): boolean {
     console.log('Verificando:', email, password);
-    const usuario = this.usuarios.find(user => user.correo === email && user.password === password);
+    const usuario = this.usuarios.find(user => user.email === email && user.password === password);
     if (usuario) {
       this.usuarioAutenticado = usuario;
       return true;

@@ -13,12 +13,14 @@
         </ion-item>
       </ion-list>
 
-      <ion-list>
-        <ion-item lines="full" (click)="administrar()">
-          Administración
-          <ion-icon slot="end" name="key" color="dark"></ion-icon> <!-- Ícono alineado a la derecha -->
-        </ion-item>
-      </ion-list>
+      <ng-container  *ngIf="isAdmin()">  
+        <ion-list>
+          <ion-item lines="full" (click)="administrar()">
+            Administración
+            <ion-icon slot="end" name="key" color="dark"></ion-icon> <!-- Ícono alineado a la derecha -->
+          </ion-item>
+        </ion-list>
+      </ng-container>
 
       <ion-list>
         <ion-item lines="full" (click)="home()">
