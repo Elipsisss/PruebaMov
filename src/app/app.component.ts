@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { UsuarioService } from './services/usuario-service.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,7 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private menu: MenuController, private router: Router) {}
+  constructor(private menu: MenuController, private usuarioService: UsuarioService, private router: Router) {}
   salir(){
     this.menu.close();
     this.router.navigate(['/login']);
@@ -31,4 +32,9 @@ export class AppComponent {
     this.menu.close();
     this.router.navigate(['/administration']);
   }
+  isAdmin(): boolean {
+    return this.usuarioService.isUsuarioAdmin();
+  }
+
+
 }

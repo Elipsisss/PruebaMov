@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { UsuarioService } from 'src/app/services/usuario-service.service';
 
 @Component({
   selector: 'app-login',
@@ -8,16 +10,33 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
-
-  email: string ="";
-  password: string="";
-
-  constructor(private router: Router, private alertController: AlertController) { }
-
-  ngOnInit() {
+  loginForm: FormGroup;
+  constructor(private alertController: AlertController, private usuarioService: UsuarioService, private router: Router) {
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required])
+    });
   }
+  ngOnInit() {}
 
+  
+
+ 
+  async submitLogin() {
+    if (this.loginForm.valid) {
+      const email = this.loginForm.get('email')?.value;
+      const password = this.loginForm.get('password')?.value;
+
+      const success = this.usuarioService.authenticate(email, password);
+      if (success) {
+        await this.router.navigate(['/home']); // Redirige a la página principal
+      } else {
+        await this.presentAlert('Error', 'Credenciales incorrectas');
+      }
+    } else {
+      await this.presentAlert('Error', 'Formulario no válido');
+    }
+  }
 
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
@@ -27,22 +46,6 @@ export class LoginPage implements OnInit {
     });
     await alert.present();
   }
-
-  
-  async login() {
-    if (this.email == "usuario01@duocuc.cl" && this.password =="prueba01") { 
-      this.router.navigate(['/home']);
-    } else {
-      await this.presentAlert('Correo o contraseña incorrectos!','');
-    }
-  }
-
-
-
-
-
-
-
-     
-
 }
+
+

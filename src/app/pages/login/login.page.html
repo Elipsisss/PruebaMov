@@ -13,12 +13,12 @@
           <ion-card-title>Iniciar Sesión</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          <form (ngSubmit)="login()">
+          <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
             <ion-item>
-              <ion-input [(ngModel)]="email" id="email" name="email" type="text" fill="solid" label="Correo Electrónico" labelPlacement="floating"></ion-input>
+              <ion-input formControlName="email" id="email" name="email" type="text" fill="solid" label="Correo Electrónico" labelPlacement="floating"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-input [(ngModel)]="password" id="password" name="password" type="password" fill="solid" label="Contraseña" labelPlacement="floating"></ion-input>
+              <ion-input formControlName="password" id="password" name="password" type="password" fill="solid" label="Contraseña" labelPlacement="floating"></ion-input>
             </ion-item>
             <a style="text-align:center;" routerLink="/recuperacion"> Olvide mi contraseña </a>
             <ion-button expand="full" type="submit">Iniciar Sesión</ion-button>

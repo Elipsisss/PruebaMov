@@ -104,10 +104,30 @@ export class RegistroPage implements OnInit {
   
   async submit() {
     if (this.user.valid) {
-      await this.presentAlert('Perfecto!', 'Registrado correctamente');
-      this.user.reset();
+      const nuevoUsuario = {
+        email: this.user.get('email')?.value,
+        nombre: this.user.get('name')?.value,
+        apellido: this.user.get('lastname')?.value,
+        rut: this.user.get('rut')?.value,
+        birthdate: this.user.get('birthdate')?.value,
+        tiene_auto: this.user.get('tiene_auto')?.value,
+        marca_auto: this.user.get('marca_auto')?.value,
+        asientos_disp: this.user.get('asientos_disp')?.value,
+        patente: this.user.get('patente')?.value,
+        gender: this.user.get('gender')?.value,
+        password: this.user.get('password')?.value
+      };
+  
+      // Intenta crear el usuario
+      const usuarioCreado = this.usuarioService.createUsuario(nuevoUsuario);
+      if (usuarioCreado) {
+        await this.presentAlert('Perfecto!', 'Registrado correctamente');
+        this.user.reset();
+      } else {
+        await this.presentAlert('Error!', 'El usuario ya está registrado');
+      }
     } else {
-      await this.presentAlert('Error!', 'El usuario no se pudo registrar');
+      await this.presentAlert('Error!', 'El formulario no es válido');
     }
   }
 }
