@@ -1,0 +1,31 @@
+<ion-content>
+
+  <ion-accordion-group>
+    <ion-accordion value="crear_reserva" (click)="initMap()" *ngIf="usuario.tiene_equipo=='si'">
+      <ion-item slot="header" color="light">
+        <ion-label>Crear reserva</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <!--Mapa-->
+        <div id="map_html"></div>
+        <!--Formulario para crear un viaje-->
+        <form [formGroup]="viaje">
+          <ion-input labelPlacement="stacked" label="id" formControlName="id"></ion-input>
+          <ion-input type="number" labelPlacement="stacked" label="asientos disp" formControlName="asientos_disp"></ion-input>
+          <ion-input labelPlacement="stacked" label="Destino" formControlName="nombre_destino"></ion-input>
+          <ion-input labelPlacement="stacked" label="Distancia (metros)" formControlName="distancia_metros"></ion-input>
+          <ion-input labelPlacement="stacked" label="Minutos" formControlName="tiempo_minutos"></ion-input>
+          <ion-button type="submit" size="block">Crear viaje</ion-button>
+        </form>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="reservas">
+      <ion-item slot="header" color="light">
+        <ion-label>Reservas</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+</ion-content>
