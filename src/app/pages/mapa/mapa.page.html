@@ -1,13 +1,14 @@
 <ion-content>
 
   <ion-accordion-group>
+
     <ion-accordion value="crear_reserva" (click)="initMap()" *ngIf="usuario.tiene_equipo=='si'">
       <ion-item slot="header" color="light">
         <ion-label>Crear reserva</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
         <!--Mapa-->
-        <div id="map_html"></div>
+        <div id="map" style="height: 400px;"></div>
         <!--Formulario para crear un viaje-->
         <form [formGroup]="viaje">
           <ion-input labelPlacement="stacked" label="id" formControlName="id"></ion-input>
