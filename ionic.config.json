@@ -1,0 +1,7 @@
+{
+  "name": "uberduoc",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
