@@ -1,4 +1,4 @@
-# ReservaCancha - Aplicación de UberDuc
+# UberDuc - Aplicación de UberDuc
 
 ## Resumen del Proyecto
 
