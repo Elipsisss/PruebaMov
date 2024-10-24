@@ -2,15 +2,14 @@
 
 ## Resumen del Proyecto
 
-ReservaCancha es una aplicación móvil desarrollada en Ionic 7.2.0 que facilita la reserva de canchas deportivas. La aplicación permite a los usuarios buscar, reservar y gestionar canchas en diferentes ubicaciones de manera rápida y sencilla desde sus dispositivos móviles. Con una interfaz intuitiva y funcionalidad en tiempo real, ReservaCancha está diseñada para mejorar la experiencia de los jugadores y optimizar la gestión de las instalaciones deportivas.
+UberDuc es una aplicación móvil desarrollada en Ionic 7.2.0 que facilita la reserva de viajes para los alumnos de vespertino en duoc. La aplicación permite a los usuarios buscar, reservar y gestionar viajes en diferentes ubicaciones de manera rápida y sencilla desde sus dispositivos móviles. Con una interfaz intuitiva y funcionalidad en tiempo real, UberDuc está diseñada para mejorar la experiencia de los alumnos y optimizar la gestión de la movilizacion estudiantil.
 
 ## Necesidad
 
-La gestión de reservas de canchas puede ser un proceso complejo y que consume tiempo, tanto para los administradores como para los usuarios. A menudo, las instalaciones deportivas enfrentan problemas de coordinación, conflictos en las reservas y una comunicación ineficiente. ReservaCancha aborda estas necesidades al proporcionar una solución centralizada que:
+La movilizacion en horas nocturnas puede ser un proceso complejo y que no existe mucha, tanto para los profesores como para los alumnos. A menudo, los alumnos comunmente enfrentan problemas de moviizacion. UberDuc aborda estas necesidades al proporcionar una solución centralizada que:
 
-- Facilita la reserva y gestión de canchas a través de una aplicación móvil.
-- Reduce los conflictos de reserva mediante un sistema de disponibilidad en tiempo real.
-- Mejora la comunicación entre los usuarios y los administradores de las instalaciones.
+- Facilita la reserva y gestión de viajes a través de una aplicación móvil.
+- Reduce los conflictos de movilizacion mediante un sistema de disponibilidad en tiempo real.
 - Permite a los usuarios consultar la disponibilidad y hacer reservas de manera conveniente desde cualquier lugar.
 
 ## Instalación
