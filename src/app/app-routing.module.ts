@@ -60,10 +60,9 @@ const routes: Routes = [
   },
 
   {
-    path: 'mapa',
-    loadChildren: () => import('./pages/mapa/mapa.module').then( m => m.MapaPageModule)
+    path: 'reservas',
+    loadChildren: () => import('./pages/reservas/reservas.module').then( m => m.ReservasPageModule)
   },
-
 
   {
     path: '**',

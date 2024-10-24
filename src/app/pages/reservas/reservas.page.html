@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear Viaje</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Información del viaje</ion-card-title>
+    </ion-card-header>
+    <br>
+    <ion-card-content>
+      <form [formGroup]="viaje" (ngSubmit)="registrarViaje()">
+        <p>Conductor: {{usuario.nombre +' Rut:  '  +  usuario.rut}}</p>
+        <ion-input labelPlacement="stacked" label="Asientos disponibles" formControlName="asientos_disponible"></ion-input>
+        <ion-input labelPlacement="stacked" label="Destino" formControlName="destino" readonly="true"></ion-input>
+        <ion-input labelPlacement="stacked" label="Distancia M" formControlName="distancia_m" readonly="true"></ion-input>
+        <ion-input labelPlacement="stacked" label="Minutos" formControlName="tiempo_minutos" readonly="true"></ion-input>
+        <ion-input labelPlacement="stacked" label="Precio" placeholder="$" formControlName="precio" readonly="true"></ion-input>
+
+        <!-- Botón de envío -->
+        <ion-button [disabled]="viaje.invalid" type="submit">Crear viaje</ion-button>
+      </form>
+    </ion-card-content>
+    <!-- Mapa -->
+    <div id="map_html"></div>
+  </ion-card>
+</ion-content>
