@@ -13,7 +13,6 @@ ion-content {
   }
   
   ion-card-header {
-    background-color: rgba(234, 179, 8, 0.2);
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
     padding: 10px 0; /* Agrega espacio interno para el header */
     margin-bottom:20px; /* Para agregar margen a los titulos como detalles del auto, info personal, lista de usuarios*/
@@ -26,6 +25,9 @@ ion-content {
     color: #000; 
   }
   
+  ion-button{
+    --background: rgb(246,232,162);
+  }
 
   
   ion-label {

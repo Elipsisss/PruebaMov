@@ -19,7 +19,7 @@ export class AdministrationPage  implements OnInit {
     genero: new FormControl('', [Validators.required]),
     sede: new FormControl('', [Validators.required]),
     tiene_auto: new FormControl('', [Validators.required]),
-    tipouser: new FormControl('', [Validators.required]),
+    role: new FormControl('', [Validators.required]),
     marca_auto: new FormControl('', [this.validarMarcaAuto.bind(this)]),
     patente: new FormControl('', [Validators.pattern(/^[A-Z]{4}[0-9]{2}$/)]),
     asientos_disp: new FormControl('', [Validators.min(1),Validators.max(8)]),
@@ -41,48 +41,55 @@ export class AdministrationPage  implements OnInit {
     'nio', 'ora', 'rivian', 'polestar', 'karma', 'landwind', 'zotye',
     'wuling', 'baojun', 'gac', 'hummer'
   ];
-
-  ngOnInit() {
-    this.usuarios = this.usuarioService.getUsuarios();
+  
+  async ngOnInit() {
+    this.usuarios = await this.usuarioService.getUsuarios();
+    this.usuarios = this.usuarios.filter(usuario => usuario.role !== 'admin');
   }
 
   async registrar() {
-    if (this.usuarioService.createUsuario(this.persona.value)) {
-      await this.presentAlert('Perfecto', 'Registrado correctamente');
+    const success = await this.usuarioService.createUsuario(this.persona.value);
+    if (success) {
+      await this.presentAlert('Usuario Registrado', '');
       this.persona.reset();
-      this.usuarios = this.usuarioService.getUsuarios();
+      this.usuarios = await this.usuarioService.getUsuarios(); 
     } else {
       await this.presentAlert('Error', 'El usuario no se pudo registrar');
     }
   }
 
   buscar(usuario: any) {
+    console.log(usuario);  // Verifica si el objeto contiene la propiedad 'email'
     this.persona.patchValue(usuario);
   }
 
-  eliminar(rut: string) {
-    if (this.usuarioService.deleteUsuario(rut)) {
-      this.usuarios = this.usuarioService.getUsuarios();
+  async eliminar(rut: string) {
+    const success = await this.usuarioService.deleteUsuario(rut);
+    if (success) {
+      this.usuarios = await this.usuarioService.getUsuarios(); // Recargar usuarios
     }
   }
 
-  modificar() {
-    var rut_modificar = this.persona.controls.rut.value || "";
-    if (this.usuarioService.updateUsuario(rut_modificar, this.persona.value)) {
-      this.presentAlert('Perfecto!', 'Modificado correctamente');
+  async modificar() {
+    const rut_modificar = this.persona.controls.rut.value || "";
+    const success = await this.usuarioService.updateUsuario(rut_modificar, this.persona.value);
+    if (success) {
+      await this.presentAlert('Perfecto!', 'Modificado correctamente');
+      this.usuarios = await this.usuarioService.getUsuarios(); // Recargar usuarios
     } else {
-      this.presentAlert('Error!', 'No se pudo modificar');
+      await this.presentAlert('Error!', 'No se pudo modificar');
     }
   }
+
   
   anios(minAge: number, maxAge: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
-      const birthDate = new Date(control.value);
+      const fecha_nacimiento = new Date(control.value);
       const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
+      let age = today.getFullYear() - fecha_nacimiento.getFullYear();
+      const monthDiff = today.getMonth() - fecha_nacimiento.getMonth();
 
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < fecha_nacimiento.getDate())) {
         age--;
       }
 

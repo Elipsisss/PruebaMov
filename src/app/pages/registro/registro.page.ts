@@ -16,15 +16,16 @@ export class RegistroPage implements OnInit {
   constructor(private alertController: AlertController, private usuarioService: UsuarioService) {
     this.user = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@duocuc.cl")]),
-      name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern("[a-zA-Z]{3,15}")]),
-      lastname: new FormControl('', [Validators.required, Validators.minLength(3),Validators.pattern("[a-zA-Z]{3,15}")]), //se deja solo un apellido dejado, anula los numeros tambien
+      nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern("[a-zA-Z]{3,15}")]),
+      apellido: new FormControl('', [Validators.required, Validators.minLength(3),Validators.pattern("[a-zA-Z]{3,15}")]), //se deja solo un apellido dejado, anula los numeros tambien
       rut: new FormControl('', [Validators.required, Validators.pattern(/^\d{6,8}-[kK0-9]$/)]),
-      birthdate: new FormControl('', [Validators.required, this.anosvalidar(18, 100)]),
+      fecha_nacimiento: new FormControl('', [Validators.required, this.anosvalidar(18, 100)]),
       tiene_auto: new FormControl('no', [Validators.required]),
       marca_auto: new FormControl('', [this.validarMarcaAuto.bind(this)]),
       asientos_disp: new FormControl('', []),
       patente: new FormControl('', [Validators.pattern(/^[A-Z]{2}[0-9]{4}$|^[A-Z]{4}[0-9]{2}$/)]),
-      gender: new FormControl('', [Validators.required]),
+      genero: new FormControl('', [Validators.required]),
+      sede: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       confirmpassword: new FormControl('', [Validators.required])
     }, { validators: this.passwordMatchValidator }); 
@@ -47,7 +48,9 @@ export class RegistroPage implements OnInit {
   
 
   ngOnInit() {
-    this.usuario = this.usuarioService.getUsuarios();
+    this.usuarioService.getUsuarios().then(usuarios => {
+      this.usuario = usuarios;
+    });
   }
   // Para que las contraseñas coincidan
   passwordMatchValidator(formGroup: AbstractControl): ValidationErrors | null {
@@ -70,24 +73,18 @@ export class RegistroPage implements OnInit {
 
   anosvalidar(minAge: number, maxAge: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
-      const birthDate = new Date(control.value);
+      const fecha_nacimiento = new Date(control.value);
       const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
+      let age = today.getFullYear() - fecha_nacimiento.getFullYear();
+      const monthDiff = today.getMonth() - fecha_nacimiento.getMonth();
 
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < fecha_nacimiento.getDate())) {
         age--;
       }
 
       return (age >= minAge && age <= maxAge) ? null : { 'invalidAge': true };
     };
   }
-
-
-
-
-
-
 
 
   async presentAlert(header: string, message: string) {
@@ -99,27 +96,26 @@ export class RegistroPage implements OnInit {
     await alert.present();
   }
 
-
-
   
   async submit() {
     if (this.user.valid) {
       const nuevoUsuario = {
         email: this.user.get('email')?.value,
-        nombre: this.user.get('name')?.value,
-        apellido: this.user.get('lastname')?.value,
+        nombre: this.user.get('nombre')?.value,
+        apellido: this.user.get('apellido')?.value,
         rut: this.user.get('rut')?.value,
-        birthdate: this.user.get('birthdate')?.value,
+        fecha_nacimiento: this.user.get('fecha_nacimiento')?.value,
         tiene_auto: this.user.get('tiene_auto')?.value,
         marca_auto: this.user.get('marca_auto')?.value,
         asientos_disp: this.user.get('asientos_disp')?.value,
         patente: this.user.get('patente')?.value,
-        gender: this.user.get('gender')?.value,
+        genero: this.user.get('genero')?.value,
+        sede: this.user.get('sede')?.value,
         password: this.user.get('password')?.value
       };
   
       // Intenta crear el usuario
-      const usuarioCreado = this.usuarioService.createUsuario(nuevoUsuario);
+      const usuarioCreado = await this.usuarioService.createUsuario(nuevoUsuario);
       if (usuarioCreado) {
         await this.presentAlert('Perfecto!', 'Registrado correctamente');
         this.user.reset();

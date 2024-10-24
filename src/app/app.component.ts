@@ -33,8 +33,10 @@ export class AppComponent {
     this.router.navigate(['/administration']);
   }
   isAdmin(): boolean {
-    return this.usuarioService.isUsuarioAdmin();
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.role === 'admin'; 
   }
-
-
 }
+
+
+
