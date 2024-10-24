@@ -2,11 +2,11 @@
 
 ## Resumen del Proyecto
 
-UberDuc es una aplicación móvil desarrollada en Ionic 7.2.0 que facilita la reserva de viajes para los alumnos de vespertino en duoc. La aplicación permite a los usuarios buscar, reservar y gestionar viajes en diferentes ubicaciones de manera rápida y sencilla desde sus dispositivos móviles. Con una interfaz intuitiva y funcionalidad en tiempo real, UberDuc está diseñada para mejorar la experiencia de los alumnos y optimizar la gestión de la movilizacion estudiantil.
+UberDuc es una aplicación móvil desarrollada en Ionic 7.2.0 que facilita la reserva de viajes para los alumnos de vespertino en duoc en un contexto de pandemia. La aplicación permite a los usuarios buscar, reservar y gestionar viajes en diferentes ubicaciones de manera rápida y sencilla desde sus dispositivos móviles. Con una interfaz intuitiva y funcionalidad en tiempo real, UberDuc está diseñada para mejorar la experiencia de los alumnos y optimizar la gestión de la movilizacion estudiantil.
 
 ## Necesidad
 
-La movilizacion en horas nocturnas puede ser un proceso complejo y que no existe mucha, tanto para los profesores como para los alumnos. A menudo, los alumnos comunmente enfrentan problemas de moviizacion. UberDuc aborda estas necesidades al proporcionar una solución centralizada que:
+La movilizacion en horas nocturnas puede ser un proceso complejo en un contexto de pandemia, tanto para los profesores como para los alumnos. A menudo, los alumnos comunmente enfrentan problemas de moviizacion. UberDuc aborda estas necesidades al proporcionar una solución centralizada que:
 
 - Facilita la reserva y gestión de viajes a través de una aplicación móvil.
 - Reduce los conflictos de movilizacion mediante un sistema de disponibilidad en tiempo real.
