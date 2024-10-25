@@ -9,8 +9,8 @@ import { UsuarioService } from 'src/app/services/usuario-service.service';
 })
 export class PerfilPage implements OnInit {
   usuario: any = {}; 
-  siEditaGenero: boolean = false; // Estado para editar género
-  siEditaSede: boolean = false;   // Estado para editar sede
+  siEditaGenero: boolean = false; 
+  siEditaSede: boolean = false;   
   tempGenero: string = '';
   tempSede: string = '';
 
@@ -22,13 +22,13 @@ export class PerfilPage implements OnInit {
     this.usuario.apellido = this.formatoApellido(this.usuario.apellido);
     this.usuario.sede = this.formatoSede(this.usuario.sede);
     this.tempGenero = this.usuario.genero;  
-    this.tempSede = this.usuario.sede; // Inicializa el valor temporal de la sede
+    this.tempSede = this.usuario.sede;
   }
 
   async obtenerUsuario() {
     this.usuario = await this.usuarioService.getUsuarioAutenticado();
     this.tempGenero = this.usuario.genero; 
-    this.tempSede = this.usuario.sede; // Inicializa el valor temporal de la sede
+    this.tempSede = this.usuario.sede; 
   }
 
   private formatoSede(value: string): string {
@@ -57,13 +57,13 @@ export class PerfilPage implements OnInit {
 
   async modificarGenero() {
     const rut_modificar = this.usuario.rut || ""; 
-    this.usuario.genero = this.tempGenero; // Actualiza el género del usuario
+    this.usuario.genero = this.tempGenero; 
 
     const success = await this.usuarioService.updateUsuario(rut_modificar, this.usuario);
     if (success) {
       await this.presentAlert('Perfecto!', 'Género modificado correctamente');
-      this.siEditaGenero = false; // Ocultar botones después de guardar
-      this.usuario = await this.usuarioService.getUsuarioAutenticado(); // Recargar el usuario actualizado
+      this.siEditaGenero = false; 
+      this.usuario = await this.usuarioService.getUsuarioAutenticado(); 
     } else {
       await this.presentAlert('Error!', 'No se pudo modificar el género');
     }
@@ -71,13 +71,13 @@ export class PerfilPage implements OnInit {
 
   async modificarSede() {
     const rut_modificar = this.usuario.rut || ""; 
-    this.usuario.sede = this.tempSede; // Actualiza la sede del usuario
+    this.usuario.sede = this.tempSede;
 
     const success = await this.usuarioService.updateUsuario(rut_modificar, this.usuario);
     if (success) {
       await this.presentAlert('Perfecto!', 'Sede modificada correctamente');
-      this.siEditaSede = false; // Ocultar botones después de guardar
-      this.usuario = await this.usuarioService.getUsuarioAutenticado(); // Recargar el usuario actualizado
+      this.siEditaSede = false; // Oculta botones
+      this.usuario = await this.usuarioService.getUsuarioAutenticado(); 
     } else {
       await this.presentAlert('Error!', 'No se pudo modificar la sede');
     }
@@ -85,12 +85,12 @@ export class PerfilPage implements OnInit {
 
   async cancelarEdicionGenero() {
     this.siEditaGenero = false; 
-    this.tempGenero = this.usuario.genero; // Restaura el valor anterior del género
+    this.tempGenero = this.usuario.genero; 
   }
 
   async cancelarEdicionSede() {
     this.siEditaSede = false; 
-    this.tempSede = this.usuario.sede; // Restaura el valor anterior de la sede
+    this.tempSede = this.usuario.sede; 
   }
 
   async presentAlert(header: string, message: string) {
