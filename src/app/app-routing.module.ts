@@ -59,6 +59,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/viaje/viaje.module').then( m => m.ViajePageModule)
   },
 
+  {
+    path: 'crearviajes',
+    loadChildren: () => import('./pages/crearviajes/crearviajes.module').then( m => m.CrearviajesPageModule)
+  },
 
 
   {
@@ -66,6 +70,7 @@ const routes: Routes = [
     redirectTo: 'e404',
     pathMatch: 'full'
   },
+
 
 
 ]

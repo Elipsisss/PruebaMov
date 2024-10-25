@@ -23,6 +23,11 @@ export class AppComponent {
     this.menu.close();
     this.router.navigate(['/home']);
   }
+  
+  crearViaje(){
+    this.menu.close();
+    this.router.navigate(['/crearviajes']);
+  }
 
   viaje(){
     this.menu.close();
@@ -36,7 +41,11 @@ export class AppComponent {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.role === 'admin'; 
   }
-}
 
+  verificarAuto(): boolean {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user.tiene_auto === 'si'; 
+  }
+}
 
 

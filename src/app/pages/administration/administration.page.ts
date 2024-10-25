@@ -8,13 +8,13 @@ import { UsuarioService } from 'src/app/services/usuario-service.service';
   templateUrl: './administration.page.html',
   styleUrls: ['./administration.page.scss'],
 })
-export class AdministrationPage  implements OnInit {
+export class AdministrationPage implements OnInit {
   persona = new FormGroup({
     nombre: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z]{3,15}")]),
     apellido: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z]{3,15}")]),
     rut: new FormControl('', [Validators.required, Validators.pattern("[0-9]{7,8}-[0-9kK]{1}")]),
     fecha_nacimiento: new FormControl('', [Validators.required, this.anios(18, 100)]),
-    correo: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@duocuc.cl")]),
+    email: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@duocuc.cl")]),
     password: new FormControl('', [Validators.required, Validators.minLength(4)]),
     genero: new FormControl('', [Validators.required]),
     sede: new FormControl('', [Validators.required]),
@@ -22,12 +22,12 @@ export class AdministrationPage  implements OnInit {
     role: new FormControl('', [Validators.required]),
     marca_auto: new FormControl('', [this.validarMarcaAuto.bind(this)]),
     patente: new FormControl('', [Validators.pattern(/^[A-Z]{4}[0-9]{2}$/)]),
-    asientos_disp: new FormControl('', [Validators.min(1),Validators.max(8)]),
+    asientos_disp: new FormControl('', [Validators.min(1), Validators.max(8)]),
   });
 
   usuarios: any[] = [];
 
-  constructor(private alertController: AlertController, private usuarioService: UsuarioService) { }
+  constructor(private alertController: AlertController, private usuarioService: UsuarioService) {}
 
   marcasAuto: string[] = [
     'abarth', 'acura', 'alfa romeo', 'audi', 'bmw', 'bentley', 'buick', 'cadillac',
@@ -43,8 +43,7 @@ export class AdministrationPage  implements OnInit {
   ];
   
   async ngOnInit() {
-    this.usuarios = await this.usuarioService.getUsuarios();
-    this.usuarios = this.usuarios.filter(usuario => usuario.role !== 'admin');
+    await this.actualizarUsuarios(); 
   }
 
   async registrar() {
@@ -52,21 +51,20 @@ export class AdministrationPage  implements OnInit {
     if (success) {
       await this.presentAlert('Usuario Registrado', '');
       this.persona.reset();
-      this.usuarios = await this.usuarioService.getUsuarios(); 
+      await this.actualizarUsuarios(); 
     } else {
       await this.presentAlert('Error', 'El usuario no se pudo registrar');
     }
   }
 
   buscar(usuario: any) {
-    console.log(usuario);  // Verifica si el objeto contiene la propiedad 'email'
     this.persona.patchValue(usuario);
   }
 
   async eliminar(rut: string) {
     const success = await this.usuarioService.deleteUsuario(rut);
     if (success) {
-      this.usuarios = await this.usuarioService.getUsuarios(); // Recargar usuarios
+      await this.actualizarUsuarios(); 
     }
   }
 
@@ -75,13 +73,17 @@ export class AdministrationPage  implements OnInit {
     const success = await this.usuarioService.updateUsuario(rut_modificar, this.persona.value);
     if (success) {
       await this.presentAlert('Perfecto!', 'Modificado correctamente');
-      this.usuarios = await this.usuarioService.getUsuarios(); // Recargar usuarios
+      await this.actualizarUsuarios(); 
     } else {
       await this.presentAlert('Error!', 'No se pudo modificar');
     }
   }
 
-  
+  async actualizarUsuarios() {
+    this.usuarios = await this.usuarioService.getUsuarios();
+    this.usuarios = this.usuarios.filter(usuario => usuario.role !== 'admin');
+  }
+
   anios(minAge: number, maxAge: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const fecha_nacimiento = new Date(control.value);
