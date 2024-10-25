@@ -64,3 +64,9 @@
 
 
 
+ion-item-option {
+  --background: transparent; 
+  --color: var(--ion-color-warning);
+  --border-radius: 8px; 
+  --padding: 8px 12px; 
+}
