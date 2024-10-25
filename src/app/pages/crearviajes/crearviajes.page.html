@@ -9,8 +9,6 @@
 
 
 
-
-
 <ion-content>
   <br> 
   <div class ="map_container"> 
@@ -24,15 +22,14 @@
         </ion-card-header>
         <ion-card-content>
           <ion-item>
-            <ion-label position="floating">Asientos Disponibles</ion-label>
-            <ion-input formControlName="asientos_disp" type="number"></ion-input>
+            <ion-label>Asientos disponibles <br> {{usuario?.asientos_disp }}</ion-label>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Valor</ion-label>
             <ion-input formControlName="valor" type="number"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Nombre Destino</ion-label>
+            <ion-label position="floating">Destino</ion-label>
             <ion-input formControlName="nombre_destino" type="text"></ion-input>
           </ion-item>
           <ion-item>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuarioService } from 'src/app/services/usuario-service.service';
+import { ViajeService } from 'src/app/services/viaje.service';
 
 @Component({
   selector: 'app-viaje',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViajePage implements OnInit {
 
-  constructor() { }
+  viajes: any[] = [];
+  usuarios: any[] = [];
 
-  ngOnInit() {
+  constructor(private viajeService: ViajeService, private usuarioService: UsuarioService) { }
+
+  async ngOnInit() {
+    await this.Datos();
+  }
+
+  async Datos() {
+    this.viajes = await this.viajeService.getViajes(); 
+    this.usuarios = await this.usuarioService.getUsuarios();
   }
 
 }

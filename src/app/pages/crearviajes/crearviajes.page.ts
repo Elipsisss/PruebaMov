@@ -9,6 +9,7 @@ import * as L from 'leaflet';
 import * as G from 'leaflet-control-geocoder';
 import 'leaflet-routing-machine';
 import { ViajeService } from 'src/app/services/viaje.service';
+import { UsuarioService } from 'src/app/services/usuario-service.service';
 
 @Component({
   selector: 'app-crearviajes',
@@ -23,7 +24,6 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
 
   viaje = new FormGroup({
     id: new FormControl('', [Validators.required]),
-    asientos_disp: new FormControl('', [Validators.min(1), Validators.max(8)]),
     valor: new FormControl('', [Validators.required]),
     nombre_destino: new FormControl('', [Validators.required]),
     latitud: new FormControl('', [Validators.required]),
@@ -35,9 +35,13 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
   });
   viajes: any[] = [];
 
-  constructor(private viajeService: ViajeService) {}
+  constructor(private viajeService: ViajeService, private usuarioService: UsuarioService) {}
 
   async ngOnInit() {
+    await this.obtenerUsuario();
+    this.usuario.nombre;
+    this.usuario.apellido;
+    this.usuario.asientos_disp;
     const usuarioData = localStorage.getItem('usuario');
     if (usuarioData) {
       this.usuario = JSON.parse(usuarioData);
@@ -152,6 +156,10 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
   buscar(viaje: any) {
     this.siEdita = true;
     this.viaje.patchValue(viaje);
+  }
+
+  async obtenerUsuario() {
+    this.usuario = await this.usuarioService.getUsuarioAutenticado();
   }
 
 
