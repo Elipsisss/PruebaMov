@@ -7,7 +7,7 @@
 
 <ion-content >
   <ion-item> 
-    <ion-input  type="text" labelPlacement="floating" label="Filtra tu sede" ></ion-input>
+    <ion-input  type="text" labelPlacement="floating" label="Conductor" ></ion-input>
   </ion-item>
 
   <ion-item> 
@@ -22,11 +22,6 @@
         <p>Destino: {{ viaje.nombre_destino }}</p>
         <p>Valor: ${{ viaje.valor }}</p>
       </ion-label>
-      <ion-button slot="end" color="warning">Reservar</ion-button>
+      <ion-button slot="end" routerLink="/detalle-reserva" color="warning">Reservar</ion-button>
     </ion-item>
-  </ion-list>
-  
-
-
-    
-    
+   </ion-list>
