@@ -40,8 +40,12 @@
           <ion-select-option value="Otro">Otro</ion-select-option>
         </ion-select>
         <ion-button *ngIf="!siEditaGenero" (click)="siEditaGenero = true">Editar</ion-button>
-        <ion-button *ngIf="siEditaGenero" (click)="modificarGenero()" color="primary">Guardar</ion-button>
-        <ion-button *ngIf="siEditaGenero" (click)="cancelarEdicionGenero()" color="warning">Cancelar</ion-button>
+        <ion-button *ngIf="siEditaGenero" (click)="modificarGenero()" style="    --background: linear-gradient(to right, #55fa6b, #05dbe2);
+    --background-hover: linear-gradient(to right, #e6b800, #b71c1c);">Guardar</ion-button>
+
+        <ion-button *ngIf="siEditaGenero" (click)="cancelarEdicionGenero()" style="    --background: linear-gradient(to right, #ff0ec3, #f71000);
+    --background-hover: linear-gradient(to right, #e6b800, #b71c1c);">Cancelar</ion-button>
+
       </ion-item>
 
 
@@ -76,8 +80,10 @@
           <ion-select-option value="Puerto Montt">Puerto Montt</ion-select-option>
           </ion-select>
           <ion-button *ngIf="!siEditaSede" (click)="siEditaSede = true">Editar</ion-button>
-          <ion-button *ngIf="siEditaSede" (click)="modificarSede()" color ="primary">Guardar</ion-button>
-          <ion-button *ngIf="siEditaSede" (click)="cancelarEdicionSede()" color="warning">Cancelar</ion-button>
+          <ion-button *ngIf="siEditaSede" (click)="modificarSede()" style="    --background: linear-gradient(to right, #55fa6b, #05dbe2);
+    --background-hover: linear-gradient(to right, #e6b800, #b71c1c);">Guardar</ion-button>
+          <ion-button *ngIf="siEditaSede" (click)="cancelarEdicionSede()" style="    --background: linear-gradient(to right, #ff0ec3, #f71000);
+    --background-hover: linear-gradient(to right, #e6b800, #b71c1c);">Cancelar</ion-button>
       </ion-item>
 
       <ion-item *ngIf="usuario?.tiene_auto?.toLowerCase() === 'si'">
