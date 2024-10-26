@@ -15,7 +15,7 @@ export class AdministrationPage implements OnInit {
     rut: new FormControl('', [Validators.required, Validators.pattern("[0-9]{7,8}-[0-9kK]{1}")]),
     fecha_nacimiento: new FormControl('', [Validators.required, this.anios(18, 100)]),
     email: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@duocuc.cl")]),
-    password: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     genero: new FormControl('', [Validators.required]),
     sede: new FormControl('', [Validators.required]),
     tiene_auto: new FormControl('', [Validators.required]),

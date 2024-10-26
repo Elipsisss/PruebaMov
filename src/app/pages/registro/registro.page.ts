@@ -26,7 +26,7 @@ export class RegistroPage implements OnInit {
       patente: new FormControl('', [Validators.pattern(/^[A-Z]{2}[0-9]{4}$|^[A-Z]{4}[0-9]{2}$/)]),
       genero: new FormControl('', [Validators.required]),
       sede: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmpassword: new FormControl('', [Validators.required])
     }, { validators: this.passwordMatchValidator }); 
   }
