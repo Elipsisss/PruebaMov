@@ -14,9 +14,11 @@ export class AppComponent {
     this.menu.close();
     this.router.navigate(['/login']);
   }
-  perfil(){
+  async perfil(){
     this.menu.close();
     this.router.navigate(['/perfil']);
+    await this.router.navigate(['/perfil']);
+    window.location.reload();
   }
 
   home(){
