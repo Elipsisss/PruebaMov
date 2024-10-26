@@ -64,12 +64,17 @@ const routes: Routes = [
     loadChildren: () => import('./pages/crearviajes/crearviajes.module').then( m => m.CrearviajesPageModule)
   },
 
+  {
+    path: 'detalle-reserva',
+    loadChildren: () => import('./pages/detalle-reserva/detalle-reserva.module').then( m => m.DetalleReservaPageModule)
+  },
 
   {
     path: '**',
     redirectTo: 'e404',
     pathMatch: 'full'
   },
+
 
 
 
