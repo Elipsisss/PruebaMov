@@ -32,6 +32,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
     tiempo_minutos: new FormControl(0, [Validators.required]),
     estado_viaje: new FormControl('pendiente'),
     pasajeros: new FormControl([]),
+    conductor: new FormControl([]),
   });
   viajes: any[] = [];
 
@@ -39,16 +40,14 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     await this.obtenerUsuario();
-    this.usuario.nombre;
-    this.usuario.apellido;
-    this.usuario.asientos_disp;
-    const usuarioData = localStorage.getItem('usuario');
-    if (usuarioData) {
-      this.usuario = JSON.parse(usuarioData);
-    } else {
-      console.warn('Error con el usuario');
-    }
-    await this.rescatarViajes();  
+    await this.rescatarViajes();
+    const usuarioStr = localStorage.getItem("usuario");
+      if (usuarioStr) {
+          this.usuario = JSON.parse(usuarioStr);
+      } else {
+          this.usuario = {}; // O asigna un valor por defecto que consideres apropiado
+      }
+    this.viaje.controls.conductor.setValue(this.usuario.nombre);
   }
 
   /*No funciona el mapa sin este codigo, porque el ngOnInit no carga el espacio del mapa, esta parte carga el

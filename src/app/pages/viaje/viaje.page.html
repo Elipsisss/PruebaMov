@@ -13,42 +13,20 @@
   <ion-item> 
     <ion-input  type="text" labelPlacement="floating" label="Filtra tu comuna" ></ion-input>
   </ion-item>
+
+
   <ion-list>
-    <ion-item >
-      <ion-avatar slot="start">
-        <img src="https://i.scdn.co/image/ab67616100005174ab4e7bf04882fb9714501780" />
-      </ion-avatar>
+    <ion-item *ngFor="let viaje of viajes">
       <ion-label>
-        <p>Sede: Puente Alto</p>
-        <p>Comuna destino: Maipú</p>
-        <p> Horario Vespertino</p>
+        <p>Conductor: {{viaje.conductor}}</p>
+        <p>Destino: {{ viaje.nombre_destino }}</p>
+        <p>Valor: ${{ viaje.valor }}</p>
       </ion-label>
-      <ion-button slot="end" color="warning" >Reservar</ion-button>
-    </ion-item>
-
-    <ion-item >
-      <ion-avatar slot="start">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdeo6aLv3coLa6YRC79Qd14oPMB7Yy8ScFMw&s" />
-      </ion-avatar>
-      <ion-label>
-        <p>Sede: Puente Alto</p>
-        <p>Comuna destino: San Bernardo</p>
-        <p> Horario Vespertino</p>
-      </ion-label>
-      <ion-button slot="end" color="warning" >Reservar</ion-button>
-    </ion-item>
-
-
-    <ion-item >
-      <ion-avatar slot="start">
-        <img src="https://ichef.bbci.co.uk/ace/ws/640/amz/worldservice/live/assets/images/2014/11/18/141118123757_autofantastico_624x351_rexfeatures_nocredit.jpg.webp" />
-      </ion-avatar>
-      <ion-label>
-        <p>Sede: Puente Alto</p>
-        <p>Comuna destino: San Jopaquin</p>
-        <p> Horario Vespertino</p>
-      </ion-label>
-      <ion-button slot="end" color="warning" >Reservar</ion-button>
+      <ion-button  slot="end" color="warning">Reservar</ion-button>
     </ion-item>
   </ion-list>
-</ion-content>
+  
+
+
+    
+    

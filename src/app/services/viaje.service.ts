@@ -5,7 +5,7 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class ViajeService {
   constructor(private storage: Storage) {
-    this.init 
+    this.init();
   }
   async init(){
     await this.storage.create();
@@ -30,23 +30,16 @@ export class ViajeService {
     return viajes;
   }
   
-  public async updateViaje(id: string, nuevoViaje: any): Promise<boolean> {
+  public async updateViaje(id: string, nuevoViaje: any): Promise<boolean>{
     let viajes: any[] = await this.storage.get("viajes") || [];
-    let indice: number = viajes.findIndex(v => v.id === id);
-    
-    if (indice === -1) {
-        console.error(`Viaje con ID ${id} no encontrado.`);
-        return false; // Si no se encuentra, retorna false
+    let indice: number = viajes.findIndex(v => v.id==id);
+    if(indice==-1){
+      return false;
     }
-    
-    nuevoViaje.id = id; 
-    viajes[indice] = nuevoViaje; // Actualiza el viaje en el índice encontrado
-    
-    await this.storage.set("viajes", viajes);
-    console.log(`Viaje con ID ${id} actualizado exitosamente.`);
-    return true; // Retorna true si la actualización fue exitosa
-}
-
+    viajes[indice] = nuevoViaje;
+    await this.storage.set("viajes",viajes);
+    return true;
+  }
   
   public async deleteViaje(id: string): Promise<boolean>{
     let viajes: any[] = await this.storage.get("viajes") || [];
