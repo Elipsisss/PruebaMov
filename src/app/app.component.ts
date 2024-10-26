@@ -46,6 +46,14 @@ export class AppComponent {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.tiene_auto === 'si'; 
   }
+
+  detalleReserva(){
+    this.menu.close();
+    this.router.navigate(['/detalle-reserva']);
+  }
+
+
+
 }
 
 
