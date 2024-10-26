@@ -12,9 +12,16 @@ export class DetalleReservaPage implements OnInit {
 
   constructor(private viajeService: ViajeService, private router: Router) {}
 
-  ngOnInit() {
- 
+  async ngOnInit() {
+    await this.getViajeDetails('id');
   }
 
-  
+  async getViajeDetails(id: string) {
+    try {
+      let viaje = await this.viajeService.getViaje(id);
+      console.log(viaje);
+    } catch (error) {
+      console.error('Error fetching viaje:', error);
+    }
+  }
 }
