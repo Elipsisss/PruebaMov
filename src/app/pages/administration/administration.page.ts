@@ -61,12 +61,36 @@ export class AdministrationPage implements OnInit {
     this.persona.patchValue(usuario);
   }
 
+  async confirmarEliminacion(rut: string) {
+    const alert = await this.alertController.create({
+      header: 'Eliminar usuario',
+      message: '¿Estás seguro de que deseas eliminar este usuario?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            this.eliminar(rut);
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+  }
+
+
   async eliminar(rut: string) {
     const success = await this.usuarioService.deleteUsuario(rut);
     if (success) {
       await this.actualizarUsuarios(); 
     }
   }
+
+
 
   async modificar() {
     const rut_modificar = this.persona.controls.rut.value || "";
