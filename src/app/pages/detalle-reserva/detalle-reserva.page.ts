@@ -14,6 +14,7 @@ export class DetalleReservaPage implements OnInit {
 
   async ngOnInit() {
     await this.cargarDatos();
+    this.viajesReservados = this.viajesReservados.filter(viaje => viaje.conductor === this.usuario.nombre);
   }
 
   async cargarDatos() {
