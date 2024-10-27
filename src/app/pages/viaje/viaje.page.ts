@@ -12,6 +12,7 @@ export class ViajePage implements OnInit {
 
   viajes: any[] = [];
   usuario: any;
+  usuarioReservado: boolean = false;
 
   constructor(private viajeService: ViajeService, private usuarioService: UsuarioService,     private router: Router, private route: ActivatedRoute ) { }
 
@@ -31,12 +32,19 @@ export class ViajePage implements OnInit {
   async tomarReserva(viajeId: string) {
     if (viajeId) {
       try {
+        const viaje = this.viajes.find(v => v.id === viajeId);
+        this.usuarioReservado = viaje?.pasajeros?.some((p: string) => p === this.usuario.nombre) || false;
+  
+        if (this.usuarioReservado) {
+          alert('Ya has reservado este viaje.');
+          return; 
+        }
         const agregado = await this.viajeService.agregarPasajero(viajeId, this.usuario.nombre);
-        console.log(this.usuario.nombre)
+        
         if (agregado) {
-          console.log(agregado);
           alert('Reserva realizada con éxito.');
-          this.router.navigate(['/detalle-reserva', viajeId]); 
+          this.router.navigate(['/detalle-reserva', viajeId]);
+        } else {
           alert('No se pudo realizar la reserva. Inténtalo de nuevo.');
         }
       } catch (error) {
@@ -44,6 +52,10 @@ export class ViajePage implements OnInit {
       }
     }
   }
+
+
+
+
 
   async desactivarRecurrente() {
     this.viajes = await this.viajeService.getViajes(); 

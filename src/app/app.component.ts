@@ -60,10 +60,9 @@ export class AppComponent {
     return user.tiene_auto === 'si'; 
   }
 
-  async detalleReserva(){
+   detalleReserva(){
     this.menu.close();
-    await this.router.navigate(['/detalle-reserva']);
-    window.location.reload();
+    this.router.navigate(['/detalle-reserva/:id']);
   }
 
 

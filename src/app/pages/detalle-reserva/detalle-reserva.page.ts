@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ViajeService } from 'src/app/services/viaje.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-detalle-reserva',
@@ -9,27 +7,46 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./detalle-reserva.page.scss'],
 })
 export class DetalleReservaPage implements OnInit {
-  viaje: any; 
+  viajesReservados: any[] = []; // Array para almacenar los viajes reservados
+  usuario: any;
 
-  constructor(private viajeService: ViajeService, private router: Router,private route: ActivatedRoute) {}
+  constructor(private viajeService: ViajeService) {}
 
   async ngOnInit() {
-    const viajeId = this.route.snapshot.paramMap.get('id');
-    if (viajeId) {
-      await this.cargarViaje(viajeId);
-    }
+    await this.cargarDatos();
   }
 
-  async cargarViaje(id: string) {
-    try {
-      this.viaje = await this.viajeService.getViaje(id);
-      if (!this.viaje) {
-        console.error("El viaje no fue encontrado.");
-        // Opcional: redirigir o mostrar mensaje de error en la vista
-      }
-    } catch (error) {
-      console.error("Error al obtener el viaje:", error);
-      // Opcional: redirigir o manejar el error en la vista
+  async cargarDatos() {
+    // Obtén el usuario actual
+    this.usuario = JSON.parse(localStorage.getItem("user") || '{}');
+
+    // Obtén todos los viajes
+    const todosLosViajes = await this.viajeService.getViajes();
+
+    // Filtra los viajes donde el usuario está en la lista de pasajeros
+    this.viajesReservados = todosLosViajes.filter((viaje: any) =>
+      viaje.pasajeros && viaje.pasajeros.includes(this.usuario.nombre)
+    );
+  }
+
+
+  async cancelarReserva(viajeId: string) {
+    const cancelado = await this.viajeService.cancelarReserva(viajeId, this.usuario.nombre);
+    if (cancelado) {
+      alert('Reserva cancelada con éxito.');
+      // Actualiza la lista de reservas después de cancelar
+      await this.cargarDatos();
+    } else {
+      alert('No se pudo cancelar la reserva. Inténtalo de nuevo.');
     }
   }
 }
+
+
+
+
+
+
+ 
+
+

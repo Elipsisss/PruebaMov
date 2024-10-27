@@ -16,7 +16,7 @@ export class ViajeService {
   public async createViaje(viaje: any): Promise<boolean> {
     let viajes: any[] = await this.storage.get("viajes") || [];
     if (viajes.find(v => v.id == viaje.id) != undefined) {
-      return false; // El viaje ya existe
+      return false; 
     }
     viajes.push(viaje);
     await this.storage.set("viajes", viajes);
@@ -37,7 +37,7 @@ export class ViajeService {
     let viajes: any[] = await this.storage.get("viajes") || [];
     let indice: number = viajes.findIndex(v => v.id == id);
     if (indice == -1) {
-      return false; // El viaje no existe
+      return false; 
     }
     viajes[indice] = nuevoViaje;
     await this.storage.set("viajes", viajes);
@@ -48,7 +48,7 @@ export class ViajeService {
     let viajes: any[] = await this.storage.get("viajes") || [];
     let indice: number = viajes.findIndex(v => v.id == id);
     if (indice == -1) {
-      return false; // El viaje no existe
+      return false; 
     }
     viajes.splice(indice, 1);
     await this.storage.set("viajes", viajes);
@@ -90,7 +90,25 @@ export class ViajeService {
 
 
 
+async cancelarReserva(viajeId: string, usuarioNombre: string): Promise<boolean> {
+  let viajes: any[] = await this.storage.get("viajes") || [];
 
+  const indice = viajes.findIndex(v => v.id === viajeId);
+  if (indice === -1) return false; 
+  
+  const pasajeros = viajes[indice].pasajeros || [];
+  const pasajeroIndex = pasajeros.indexOf(usuarioNombre);
+  
+  if (pasajeroIndex === -1) return false; 
+
+ 
+  pasajeros.splice(pasajeroIndex, 1);  // corta el pasajero de la lista y aumenta el número de asientos disponibles
+  viajes[indice].asientos_disp += 1;
+
+  // Guarda cambios 
+  await this.storage.set("viajes", viajes);
+  return true; 
+}
 
 
 
