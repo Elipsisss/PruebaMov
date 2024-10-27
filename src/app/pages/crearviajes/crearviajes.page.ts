@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import{v4 as uuidv4} from 'uuid';
 
@@ -36,7 +37,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
   });
   viajes: any[] = [];
 
-  constructor(private viajeService: ViajeService, private usuarioService: UsuarioService) {}
+  constructor(private viajeService: ViajeService, private usuarioService: UsuarioService, private alertController: AlertController) {}
 
   async ngOnInit() {
     await this.obtenerUsuario();
@@ -96,7 +97,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
             fitSelectedRoutes: true,
             
           }).on('routesfound', (e) => {
-         
+
             /* ASIGNO VARIABLE */
             const distancia = e.routes[0].summary.totalDistance; 
             const tiempo = Math.round(e.routes[0].summary.totalTime / 60); 
@@ -115,8 +116,6 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
       console.error("Error al inicializar el mapa:", error);
     }
   }
-  
-
 
  async crearViaje() {
     if (this.viaje.invalid) {
@@ -126,12 +125,35 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
     this.siEdita = false;
 
     if (await this.viajeService.createViaje(this.viaje.value)) {
-        alert("Viaje creado!");
+      const alert = await this.alertController.create({
+        header: 'viaje creado exitosamente ',
+      });
+      alert.present();
         this.viaje.reset(); 
         await this.rescatarViajes(); 
     } else {
         alert("Error al crear el viaje.");
     }
+}
+
+async confirmarCreaciondeviaje () {
+  const alert = await this.alertController.create({
+    header: 'Confirmar creación de viaje',
+    message: '¿Estás seguro que quieres crear este viaje ?',
+    buttons: [
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+      },
+      {
+        text: 'Crear viaje',
+        handler: () => {
+          this.crearViaje();
+        },
+      },
+    ],
+  });
+  await alert.present();
 }
 
 
@@ -184,7 +206,6 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
     const metros = 200; // 200 metros
     const incremento = 130; // tarifa que se paga adicional en LOS 60 SEGUNDOS O 200 METROS
     const tiempo_segundos = 60; // 60 segundos
-  
     let tarifaTotal = tarifaBase;
   
     // Calcular la cantidad de segmentos de 200 metros recorridos
@@ -192,7 +213,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
       const segmentosDistancia = Math.floor((distancia - metros) / metros);
       tarifaTotal += segmentosDistancia * incremento;
     }
-  
+
     // Calcular la cantidad de segmentos de 60 segundos
     if (tiempo > tiempo_segundos) {
       const segmentosTiempo = Math.floor((tiempo - tiempo_segundos) / tiempo_segundos);
@@ -207,6 +228,4 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
     this.viaje.reset(); 
   }
   
-
-
 }
