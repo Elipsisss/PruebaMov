@@ -32,7 +32,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
     tiempo_minutos: new FormControl(0, [Validators.required]),
     estado_viaje: new FormControl('pendiente'),
     pasajeros: new FormControl([]),
-    conductor: new FormControl([]),
+    conductor: new FormControl('',[Validators.required]),
   });
   viajes: any[] = [];
 

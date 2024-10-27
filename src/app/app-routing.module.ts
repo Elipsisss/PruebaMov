@@ -65,7 +65,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'detalle-reserva',
+    path: 'detalle-reserva/:id',
     loadChildren: () => import('./pages/detalle-reserva/detalle-reserva.module').then( m => m.DetalleReservaPageModule)
   },
 
