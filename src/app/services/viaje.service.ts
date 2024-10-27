@@ -69,18 +69,24 @@ export class ViajeService {
     const indice = viajes.findIndex(v => v.id === viajeId);
 
     if (indice === -1) {
-      return false; // El viaje no existe
+        return false; 
     }
-
-    // Asegúrate de que `pasajeros` es un array y luego agrega el nuevo pasajero
+  
     if (!viajes[indice].pasajeros) {
-      viajes[indice].pasajeros = [];
+        viajes[indice].pasajeros = []; 
     }
 
-    viajes[indice].pasajeros.push(pasajero);
-    await this.storage.set("viajes", viajes);
-    return true;
-  }
+    
+    if (viajes[indice].asientos_disp > 0) {
+        viajes[indice].asientos_disp -= 1;
+        viajes[indice].pasajeros.push(pasajero);
+        await this.storage.set("viajes", viajes);
+        return true; 
+    } else {
+        return false; 
+    }
+}
+
 
 
 
