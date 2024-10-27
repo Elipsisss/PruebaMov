@@ -64,7 +64,6 @@ export class ViajeService {
 
 
 
-
   public async agregarPasajero(viajeId: string, pasajero: any): Promise<boolean> {
     let viajes: any[] = await this.storage.get("viajes") || [];
     const indice = viajes.findIndex(v => v.id === viajeId);

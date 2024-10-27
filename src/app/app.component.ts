@@ -26,19 +26,30 @@ export class AppComponent {
     this.router.navigate(['/home']);
   }
   
-  crearViaje(){
+  async crearViaje(){
     this.menu.close();
-    this.router.navigate(['/crearviajes']);
+    await this.router.navigate(['/crearviajes']);
+    window.location.reload();
   }
 
-  viaje(){
+  async viaje(){
     this.menu.close();
-    this.router.navigate(['/viaje']);
+    await this.router.navigate(['/viaje']);
+    window.location.reload();
   }
-  administrar(){
+
+  async tusViajes(){
     this.menu.close();
-    this.router.navigate(['/administration']);
+    await this.router.navigate(['/tus-viajes']);
+    window.location.reload();
   }
+
+  async administrar(){
+    this.menu.close();
+    await this.router.navigate(['/administration']);
+    window.location.reload();
+  }
+  
   isAdmin(): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.role === 'admin'; 
@@ -49,9 +60,10 @@ export class AppComponent {
     return user.tiene_auto === 'si'; 
   }
 
-  detalleReserva(){
+  async detalleReserva(){
     this.menu.close();
-    this.router.navigate(['/detalle-reserva']);
+    await this.router.navigate(['/detalle-reserva']);
+    window.location.reload();
   }
 
 

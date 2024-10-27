@@ -15,13 +15,13 @@
   </ion-item>
 
   <ion-list>
-
       <div *ngFor="let viaje of viajes">
         <div *ngIf="viaje.estado_viaje == 'pendiente'">
           <ion-item>
             <ion-label>
               <p>Conductor: {{ viaje.conductor }}</p>
               <p>Destino: {{ viaje.nombre_destino }}</p>
+              <p>Asientos disponibles: {{viaje.asientos_disp}}</p>
               <p>Valor: ${{ viaje.valor }}</p>
             </ion-label>
             <ion-button slot="end" (click)="tomarReserva(viaje.id)" color="warning" >Reservar</ion-button>

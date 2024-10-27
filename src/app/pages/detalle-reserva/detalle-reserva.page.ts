@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 export class DetalleReservaPage implements OnInit {
   viaje: any; 
 
-  constructor( private viajeService: ViajeService, private router: Router, private route: ActivatedRoute ) {}
+  constructor(private viajeService: ViajeService, private router: Router,private route: ActivatedRoute) {}
 
   async ngOnInit() {
     const viajeId = this.route.snapshot.paramMap.get('id');

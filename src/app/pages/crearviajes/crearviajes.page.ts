@@ -34,6 +34,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
     estado_viaje: new FormControl('pendiente'),
     pasajeros: new FormControl(),
     conductor: new FormControl(),
+    asientos_disp: new FormControl(),
   });
   viajes: any[] = [];
 
@@ -49,6 +50,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
           this.usuario = {}; // O asigna un valor por defecto que consideres apropiado
       }
     this.viaje.controls.conductor.setValue(this.usuario.nombre);
+    this.viaje.controls.asientos_disp.setValue(this.usuario.asientos_disp);
   }
 
   /*No funciona el mapa sin este codigo, porque el ngOnInit no carga el espacio del mapa, esta parte carga el

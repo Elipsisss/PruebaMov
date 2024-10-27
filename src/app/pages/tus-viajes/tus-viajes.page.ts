@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ViajeService } from 'src/app/services/viaje.service';
 import { UsuarioService } from 'src/app/services/usuario-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
-
 @Component({
-  selector: 'app-viaje',
-  templateUrl: './viaje.page.html',
-  styleUrls: ['./viaje.page.scss'],
+  selector: 'app-tus-viajes',
+  templateUrl: './tus-viajes.page.html',
+  styleUrls: ['./tus-viajes.page.scss'],
 })
-export class ViajePage implements OnInit {
+export class TusViajesPage implements OnInit {
 
   viajes: any[] = [];
   usuario: any;
@@ -47,7 +46,7 @@ export class ViajePage implements OnInit {
 
   async desactivarRecurrente() {
     this.viajes = await this.viajeService.getViajes(); 
-    this.viajes = this.viajes.filter(viaje => viaje.conductor != this.usuario.nombre);
+    this.viajes = this.viajes.filter(viaje => viaje.conductor === this.usuario.nombre);
   }
 
 
