@@ -33,7 +33,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
     tiempo_minutos: new FormControl(0, [Validators.required]),
     estado_viaje: new FormControl('pendiente'),
     pasajeros: new FormControl([]),
-    conductor: new FormControl(['',[Validators.required]]),
+    conductor: new FormControl(),
   });
   viajes: any[] = [];
 
@@ -42,7 +42,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
   async ngOnInit() {
     await this.obtenerUsuario();
     await this.rescatarViajes();
-    const usuarioStr = localStorage.getItem("usuario");
+    const usuarioStr = localStorage.getItem("user");
       if (usuarioStr) {
           this.usuario = JSON.parse(usuarioStr);
       } else {
@@ -197,7 +197,6 @@ async confirmarCreaciondeviaje () {
       await alert.present();
       this.viaje.reset();  
     } else {
-      alert("Error al eliminar el viaje.");
     }
   }
 
