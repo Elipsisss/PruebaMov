@@ -55,20 +55,53 @@ export class ViajeService {
     return true;
   }
 
-  // Método para crear una reserva
-  public async createReserva(reserva: any): Promise<boolean> {
-    let reservas: any[] = await this.storage.get("reservas") || [];
-    if (reservas.find(r => r.id == reserva.id) != undefined) {
-      return false; // La reserva ya existe
+
+
+
+
+
+
+
+
+
+
+  public async agregarPasajero(viajeId: string, pasajero: any): Promise<boolean> {
+    let viajes: any[] = await this.storage.get("viajes") || [];
+    const indice = viajes.findIndex(v => v.id === viajeId);
+
+    if (indice === -1) {
+      return false; // El viaje no existe
     }
-    reservas.push(reserva);
-    await this.storage.set("reservas", reservas);
+
+    // Asegúrate de que `pasajeros` es un array y luego agrega el nuevo pasajero
+    if (!viajes[indice].pasajeros) {
+      viajes[indice].pasajeros = [];
+    }
+
+    viajes[indice].pasajeros.push(pasajero);
+    await this.storage.set("viajes", viajes);
     return true;
   }
 
-  // Método para obtener todas las reservas
-  public async getReservas(): Promise<any[]> {
-    let reservas: any[] = await this.storage.get("reservas") || [];
-    return reservas;
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

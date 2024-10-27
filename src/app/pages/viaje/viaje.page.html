@@ -23,13 +23,15 @@
               <p>Conductor: {{ viaje.conductor }}</p>
               <p>Destino: {{ viaje.nombre_destino }}</p>
               <p>Valor: ${{ viaje.valor }}</p>
-              <p>Pasajeros: {{ viaje.pasajeros }}</p>
             </ion-label>
-            <ion-button slot="end" [routerLink]="['/detalle-reserva', viaje.id]" color="warning"
-              [disabled]="viaje.asientos_disp == 0">Reservar</ion-button>
+            <ion-button slot="end" (click)="tomarReserva(viaje.id)" color="warning" >Reservar</ion-button>
           </ion-item>
         </div>
       </div>
 
   </ion-list>
 </ion-content>
+
+
+
+

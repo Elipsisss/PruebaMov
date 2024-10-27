@@ -9,30 +9,27 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./detalle-reserva.page.scss'],
 })
 export class DetalleReservaPage implements OnInit {
-  reserva: any;
+  viaje: any; 
 
-  constructor(
-    private viajeService: ViajeService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor( private viajeService: ViajeService, private router: Router, private route: ActivatedRoute ) {}
 
   async ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      await this.getViajeDetails(id);
-    } else {
-      console.error('No ID provided in route');
+    const viajeId = this.route.snapshot.paramMap.get('id');
+    if (viajeId) {
+      await this.cargarViaje(viajeId);
     }
   }
 
-  async getViajeDetails(id: string) {
+  async cargarViaje(id: string) {
     try {
-      let viaje = await this.viajeService.getViaje(id);
-      this.reserva = viaje;
-      console.log(viaje);
+      this.viaje = await this.viajeService.getViaje(id);
+      if (!this.viaje) {
+        console.error("El viaje no fue encontrado.");
+        // Opcional: redirigir o mostrar mensaje de error en la vista
+      }
     } catch (error) {
-      console.error('Error fetching viaje:', error);
+      console.error("Error al obtener el viaje:", error);
+      // Opcional: redirigir o manejar el error en la vista
     }
   }
 }
