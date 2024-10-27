@@ -33,7 +33,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
     tiempo_minutos: new FormControl(0, [Validators.required]),
     estado_viaje: new FormControl('pendiente'),
     pasajeros: new FormControl([]),
-    conductor: new FormControl('',[Validators.required]),
+    conductor: new FormControl(['',[Validators.required]]),
   });
   viajes: any[] = [];
 
@@ -78,7 +78,6 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
         placeholder: "Ingrese dirección a buscar",
         errorMessage: "Dirección no encontrada"
       }).addTo(this.map);
-
       // ACCIÓN CON EL BUSCADOR, CUANDO OCURRA ALGO CON EL BUSCADOR:
       this.geocoder.on('markgeocode', (e) => {
         // CARGO EL FORMULARIO:
