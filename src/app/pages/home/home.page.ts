@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,18 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  usuario: any;  
+
+  constructor(private navController: NavController) {}
+
+  ngOnInit(){
+    this.usuario = JSON.parse(localStorage.getItem("user") || '');
+  }
+
+  logout(){
+    localStorage.removeItem('user');
+    this.navController.navigateRoot('/login');
+  }
 
 }
 
