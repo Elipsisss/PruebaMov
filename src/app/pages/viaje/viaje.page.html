@@ -16,17 +16,19 @@
 
   <ion-list>
     <div *ngFor="let viaje of viajes">
-      <div *ngFor="let usuario of usuarios">
-      <ion-item *ngIf="viaje.estado_viaje == 'pendiente'">
-        <ion-label>
-          <p>Conductor: {{ usuario.nombre }}</p>
-          <p>Destino: {{ viaje.nombre_destino }}</p>
-          <p>Valor: ${{ viaje.valor }}</p>
-          <p>Pasajeros: {{ viaje.pasajeros }}</p>
-        </ion-label>
-        <ion-button slot="end" [routerLink]="['/detalle-reserva', viaje.id]" color="warning" [disabled]="viaje.asientos_disp == 0">Reservar</ion-button>
-      </ion-item>
-    </div>
+      <div *ngIf="viaje.estado_viaje == 'pendiente'">
+        <div *ngFor="let usuario of usuarios">
+          <ion-item>
+            <ion-label>
+              <p>Conductor: {{ usuario.nombre }}</p>
+              <p>Destino: {{ viaje.nombre_destino }}</p>
+              <p>Valor: ${{ viaje.valor }}</p>
+              <p>Pasajeros: {{ viaje.pasajeros }}</p>
+            </ion-label>
+            <ion-button slot="end" [routerLink]="['/detalle-reserva', viaje.id]" color="warning" [disabled]="viaje.asientos_disp == 0">Reservar</ion-button>
+          </ion-item>
+        </div>
+      </div>
     </div>
   </ion-list>
 </ion-content>

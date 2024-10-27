@@ -125,7 +125,9 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
 
     if (await this.viajeService.createViaje(this.viaje.value)) {
       const alert = await this.alertController.create({
-        header: 'viaje creado exitosamente ',
+        header: 'Viaje Creado Exitosamente',
+        message: 'Tu viaje ha sido creado con éxito y está listo para ser utilizado.',
+        buttons: ['OK']
       });
       alert.present();
         this.viaje.reset(); 
@@ -179,12 +181,44 @@ async confirmarCreaciondeviaje () {
 
   async eliminarViaje(id: string) {
     if (await this.viajeService.deleteViaje(id)) {
-      alert("Viaje eliminado!");
       await this.rescatarViajes();
+      const alert = await this.alertController.create({
+        header: 'viaje eliminado',
+        message: 'El viaje ha sido eliminado con éxito.',
+        buttons: [
+          {
+            text: 'OK',
+            handler: () => {
+              this.eliminarViaje(id);
+            },
+          },
+        ],
+      });
+      await alert.present();
       this.viaje.reset();  
     } else {
       alert("Error al eliminar el viaje.");
     }
+  }
+
+  async confirmarEliminacionViaje(id: string) {
+    const alert = await this.alertController.create({
+      header: 'Confirmar eliminación de viaje',
+      message: '¿Estás seguro que quieres eliminar este viaje?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            this.eliminarViaje(id);
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
 
