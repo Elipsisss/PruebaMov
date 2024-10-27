@@ -60,7 +60,7 @@
         <ion-list>
           <ion-item-sliding *ngFor="let viaje of viajes">
             <ion-item>
-              <ion-label> {{ viaje.nombre_destino }} - ${{ viaje.valor }} - {{viaje.conductor}}</ion-label>
+              <ion-label> {{ viaje.nombre_destino }} - ${{ viaje.valor }} </ion-label>
             </ion-item>
           
             <ion-item-options side="start">
@@ -73,7 +73,6 @@
               <ion-item-option (click)="buscar(viaje)">
                 <ion-icon name="search"></ion-icon> Buscar 
               </ion-item-option>
-
               <ion-item-option (click)="eliminarViaje(viaje.id)">
                 <ion-icon name="trash"></ion-icon> Eliminar 
               </ion-item-option>
