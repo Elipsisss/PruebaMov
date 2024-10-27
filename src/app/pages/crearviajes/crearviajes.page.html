@@ -60,7 +60,7 @@
         <ion-list>
           <ion-item-sliding *ngFor="let viaje of viajes">
             <ion-item>
-              <ion-label> {{ viaje.nombre_destino }} - ${{ viaje.valor }} </ion-label>
+              <ion-label> {{ viaje.nombre_destino }} - ${{ viaje.valor }} - {{viaje.conductor}} </ion-label>
             </ion-item>
           
             <ion-item-options side="start">
