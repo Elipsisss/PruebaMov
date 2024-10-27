@@ -22,7 +22,6 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
   private geocoder: G.Geocoder | undefined;
   usuario: any;
   siEdita = false;
-  viajesFiltrados: any;
 
   viaje = new FormGroup({
     id: new FormControl('', [Validators.required]),
@@ -161,6 +160,7 @@ async confirmarCreaciondeviaje () {
 
   async rescatarViajes() {
     this.viajes = await this.viajeService.getViajes(); 
+    this.viajes = this.viajes.filter(viaje => viaje.conductor === this.usuario.nombre);
   }
 
 
@@ -229,8 +229,6 @@ async confirmarCreaciondeviaje () {
 
   async obtenerUsuario() {
     this.usuario = await this.usuarioService.getUsuarioAutenticado();
-    this.viajesFiltrados = this.viajes.filter(viajes => viajes.conductor === this.usuario.nombre);
-    
   }
 
 
@@ -288,6 +286,6 @@ async confirmarCreaciondeviaje () {
 
 
 
-
+  
   
 }
