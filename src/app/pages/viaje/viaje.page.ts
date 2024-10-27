@@ -22,9 +22,7 @@ export class ViajePage implements OnInit {
 
   async Datos() {
     this.viajes = await this.viajeService.getViajes();
-
     this.usuarios = await this.usuarioService.getUsuarios();
-
   }
 
 }
