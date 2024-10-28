@@ -36,21 +36,32 @@ export class ViajePage implements OnInit {
         this.usuarioReservado = viaje?.pasajeros?.some((p: string) => p === this.usuario.nombre) || false;
   
         if (this.usuarioReservado) {
-          alert('Ya has reservado este viaje.');
+          this.showAlert('Reserva duplicada', 'Ya has reservado este viaje.');
           return; 
         }
         const agregado = await this.viajeService.agregarPasajero(viajeId, this.usuario.nombre);
         
         if (agregado) {
-          alert('Reserva realizada con éxito.');
+          this.showAlert('Reserva exitosa', 'Reserva realizada con éxito.');
           this.router.navigate(['/detalle-reserva', viajeId]);
         } else {
-          alert('No se pudo realizar la reserva. Inténtalo de nuevo.');
+          this.showAlert('Error', 'No se pudo realizar la reserva. Inténtalo de nuevo.');
         }
       } catch (error) {
         console.error('Error al reservar el viaje:', error);
+        this.showAlert('Error', 'Ocurrió un error al reservar el viaje. Inténtalo de nuevo.');
       }
     }
+  }
+
+  private async showAlert(header: string, message: string) {
+    const alert = document.createElement('ion-alert');
+    alert.header = header;
+    alert.message = message;
+    alert.buttons = ['OK'];
+
+    document.body.appendChild(alert);
+    await alert.present();
   }
 
 
