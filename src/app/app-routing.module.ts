@@ -26,13 +26,11 @@ const routes: Routes = [
 
   {
     path: 'login',
-    canActivate: [authGuard],
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   
   {
     path: 'registro',
-    canActivate: [authGuard],
     loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
   },  {
     path: 'administration',
@@ -58,7 +56,6 @@ const routes: Routes = [
 
   {
     path: 'recuperacion',
-    canActivate: [authGuard],
     loadChildren: () => import('./pages/recuperacion/recuperacion.module').then( m => m.RecuperacionPageModule)
   },
 
