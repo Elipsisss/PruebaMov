@@ -12,6 +12,7 @@ export class AppComponent {
   constructor(private menu: MenuController, private usuarioService: UsuarioService, private router: Router) {}
   salir(){
     this.menu.close();
+    localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
   async perfil(){
