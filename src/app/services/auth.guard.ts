@@ -6,7 +6,7 @@ import { RouterStateSnapshot } from '@angular/router';
 
 export const authGuard: CanActivateFn = (route, state: RouterStateSnapshot) => {
   const navController = inject(NavController);
-  const isAuthenticated = localStorage.getItem("usuario") ? true : false;
+  const isAuthenticated = localStorage.getItem("user") ? true : false;
 
   //VAMOS A VALIDAR SI EL USUARIO NO ESTÁ LOGUEADO Y ACCEDE A UNA PAGINA DISTINTA DE HOME:
   if(!isAuthenticated && state.url !== '/login'){
