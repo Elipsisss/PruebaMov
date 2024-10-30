@@ -90,14 +90,14 @@ export class ViajeService {
 
 
 
-async cancelarReserva(viajeId: string, usuarioNombre: string): Promise<boolean> {
+async cancelarReserva(viajeId: string, usuarioRut: string): Promise<boolean> {
   let viajes: any[] = await this.storage.get("viajes") || [];
 
   const indice = viajes.findIndex(v => v.id === viajeId);
   if (indice === -1) return false; 
   
   const pasajeros = viajes[indice].pasajeros || [];
-  const pasajeroIndex = pasajeros.indexOf(usuarioNombre);
+  const pasajeroIndex = pasajeros.indexOf(usuarioRut);
   
   if (pasajeroIndex === -1) return false; 
 

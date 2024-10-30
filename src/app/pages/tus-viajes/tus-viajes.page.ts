@@ -27,11 +27,12 @@ export class TusViajesPage implements OnInit {
   }
 
 
+  /*  este metodo se esta ocupando en este TS ?? o porque esta aqui ? 
+
   async tomarReserva(viajeId: string) {
     if (viajeId) {
       try {
-        const agregado = await this.viajeService.agregarPasajero(viajeId, this.usuario.nombre);
-        console.log(this.usuario.nombre)
+        const agregado = await this.viajeService.agregarPasajero(viajeId, this.usuario.rut);
         if (agregado) {
           console.log(agregado);
           alert('Reserva realizada con éxito.');
@@ -43,6 +44,7 @@ export class TusViajesPage implements OnInit {
       }
     }
   }
+  */
 
   async desactivarRecurrente() {
     this.viajes = await this.viajeService.getViajes(); 

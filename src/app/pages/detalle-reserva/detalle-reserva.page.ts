@@ -7,47 +7,50 @@ import { ViajeService } from 'src/app/services/viaje.service';
   styleUrls: ['./detalle-reserva.page.scss'],
 })
 export class DetalleReservaPage implements OnInit {
-  viajesReservados: any[] = []; // Array para almacenar los viajes reservados
+  viajes: any[] = [];
   usuario: any;
+  viajeConUsuario: any;
 
   constructor(private viajeService: ViajeService) {}
 
   async ngOnInit() {
-    await this.cargarDatos();
-    this.viajesReservados = this.viajesReservados.filter(viaje => viaje.conductor === this.usuario.nombre);
+    await this.Datos();
+    await this.activarRecurrente();
+    this.viajeConUsuario = this.buscarCoincidencia()
+    console.log(this.viajeConUsuario)
   }
 
-  async cargarDatos() {
-    // Obtén el usuario actual
-    this.usuario = JSON.parse(localStorage.getItem("user") || '{}');
-
-    // Obtén todos los viajes
-    const todosLosViajes = await this.viajeService.getViajes();
-
-    // Filtra los viajes donde el usuario está en la lista de pasajeros
-    this.viajesReservados = todosLosViajes.filter((viaje: any) =>
-      viaje.pasajeros && viaje.pasajeros.includes(this.usuario.nombre)
-    );
+  async Datos() {
+    this.viajes = await this.viajeService.getViajes();
+    this.usuario = JSON.parse(localStorage.getItem("user") || '');
   }
+  
+  async activarRecurrente() {
+    this.viajes = await this.viajeService.getViajes(); 
+    console.log(this.viajes.indexOf(this.usuario.rut))
+    this.viajes = this.viajes.filter(viaje => viaje.conductor != this.usuario.nombre);
 
+}
+
+ 
 
   async cancelarReserva(viajeId: string) {
-    const cancelado = await this.viajeService.cancelarReserva(viajeId, this.usuario.nombre);
+    const cancelado = await this.viajeService.cancelarReserva(viajeId, this.usuario.rut);
     if (cancelado) {
       alert('Reserva cancelada con éxito.');
-      // Actualiza la lista de reservas después de cancelar
-      await this.cargarDatos();
+      window.location.reload();
     } else {
       alert('No se pudo cancelar la reserva. Inténtalo de nuevo.');
     }
   }
+
+buscarCoincidencia() {
+  for (let viaje of this.viajes) {
+    if (viaje.pasajeros.indexOf(this.usuario.rut) !== -1) {
+      return viaje;
+    }
+  }
+  return null;
 }
 
-
-
-
-
-
- 
-
-
+}

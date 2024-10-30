@@ -33,14 +33,13 @@ export class ViajePage implements OnInit {
     if (viajeId) {
       try {
         const viaje = this.viajes.find(v => v.id === viajeId);
-        this.usuarioReservado = viaje?.pasajeros?.some((p: string) => p === this.usuario.nombre) || false;
+        this.usuarioReservado = viaje?.pasajeros?.some((p: string) => p === this.usuario.rut) || false;
   
         if (this.usuarioReservado) {
           this.showAlert('Reserva duplicada', 'Ya has reservado este viaje.');
           return; 
         }
-        const agregado = await this.viajeService.agregarPasajero(viajeId, this.usuario.nombre);
-        
+        const agregado = await this.viajeService.agregarPasajero(viajeId, this.usuario.rut);
         if (agregado) {
           this.showAlert('Reserva exitosa', 'Reserva realizada con éxito.');
           this.router.navigate(['/detalle-reserva', viajeId]);
