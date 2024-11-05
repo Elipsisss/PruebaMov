@@ -1,0 +1,14 @@
+  
+  .imagen-logo {
+    display: flex;
+    justify-content: center; 
+    align-items: flex-start;
+    width: 100%; 
+    height: 100%; 
+  }
+  
+  .logo {
+    max-width: 350px; /*  tamaño   imagen */
+    height: auto; /*   proporción de aspecto (no mover) */
+  }
+

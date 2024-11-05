@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-menu-button color="dark" slot="start"></ion-menu-button>
+    <ion-title>Tus Viajes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <div *ngIf="viajes.length === 0">
+      <ion-item>
+        <ion-label>No hay viajes creados.</ion-label>
+      </ion-item>
+    </div>
+
+    <div *ngFor="let viaje of viajes">
+      <div *ngIf="viaje.estado_viaje === 'pendiente'">
+        <ion-item>
+          <ion-label>
+            <p>Conductor: {{ viaje.conductor }}</p>
+            <p>Destino: {{ viaje.nombre_destino }}</p>
+            <p>Valor: ${{ viaje.valor }}</p>
+            <p>Pasajeros: {{ viaje.pasajeros}}</p> <!-- Muestra la cantidad de pasajeros -->
+          </ion-label>
+        </ion-item>
+      </div>
+    </div>
+  </ion-list>
+</ion-content>

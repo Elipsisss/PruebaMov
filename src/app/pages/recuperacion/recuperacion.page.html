@@ -1,0 +1,28 @@
+<ion-content>
+  <div class="outer-container">
+    <!-- Imagen del logo -->
+    <div class="imagen-logo">
+      <img src="assets/uberduc.jfif.png" alt="Auto-logo" class="logo" />
+    </div>
+
+    <!-- Formulario de recuperación de contraseña -->
+    <div class="login-container">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Recuperar Contraseña</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <form [formGroup]="user" (ngSubmit)="submit()">
+            <ion-item>
+              <ion-input id="email" formControlName="email" name="email" type="email" fill="solid" label="Correo Electrónico" labelPlacement="floating"></ion-input>
+            </ion-item>
+            <ion-button expand="full" type="submit">Enviar correo electrónico</ion-button>
+          </form>
+          <br/>
+          <p style="text-align: center;"> ¿Ya tienes cuenta? <a routerLink="/login">Iniciar sesión</a></p>
+          <p style="text-align: center;"> ¿No tienes cuenta? <a routerLink="/registro">Regístrate</a></p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

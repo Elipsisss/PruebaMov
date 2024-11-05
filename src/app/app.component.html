@@ -1,0 +1,76 @@
+<ion-app>
+  <ion-menu contentId="menu">
+    <ion-header>
+      <img routerLink="/home" src="../assets/uberduc.jfif.png" alt=""> <ion-title></ion-title>
+    </ion-header>
+
+    
+    <ion-content>
+      <ion-list>
+        <ion-item lines="full" (click)="perfil()">
+          Perfil
+          <ion-icon slot="end" name="person" color="dark"></ion-icon> <!-- Ícono alineado a la derecha -->
+        </ion-item>
+      </ion-list>
+
+      <ng-container  *ngIf="isAdmin()">  
+        <ion-list>
+          <ion-item lines="full" (click)="administrar()">
+            Administración
+            <ion-icon slot="end" name="key" color="dark"></ion-icon> <!-- Ícono alineado a la derecha -->
+          </ion-item>
+        </ion-list>
+      </ng-container>
+
+      <ion-list>
+        <ion-item lines="full" (click)="home()">
+          Home
+          <ion-icon slot="end" name="home" color="dark"></ion-icon> 
+        </ion-item>
+      </ion-list>
+
+      <ng-container  *ngIf="verificarAuto()">  
+        <ion-list>
+          <ion-item lines="full" (click)="crearViaje()">
+            Crear Viaje
+            <ion-icon slot="end" name="key" color="dark"></ion-icon> 
+          </ion-item>
+        </ion-list>
+      </ng-container>
+      
+      <ng-container  *ngIf="verificarAuto()">  
+        <ion-list>
+          <ion-item lines="full" (click)="tusViajes()">
+            Tus viajes
+            <ion-icon slot="end" name="flag" color="dark"></ion-icon> 
+          </ion-item>
+        </ion-list>
+      </ng-container>
+  
+
+      <ion-list>
+        <ion-item lines="full" (click)="viaje()">
+          Viaje
+          <ion-icon slot="end" name="car" color="dark"></ion-icon> 
+        </ion-item>
+      </ion-list>
+
+      <ion-list>
+        <ion-item lines="full" (click)="detalleReserva()">
+          Reservas
+          <ion-icon slot="end" name="car" color="dark"></ion-icon> 
+        </ion-item>
+      </ion-list>
+
+
+      <ion-list>
+        <ion-item lines="full" (click)="salir()">
+          Salir Sesión
+          <ion-icon slot="end" name="log-out-outline" color="dark"></ion-icon> <!-- Ícono alineado a la derecha -->
+        </ion-item>
+
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="menu"></ion-router-outlet>
+</ion-app>

@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-menu-button color="dark" slot="start"></ion-menu-button>
+    <ion-title>Reservas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="viajeConUsuario">
+  <ion-card *ngFor="let viaje of viajes">
+    <ion-card-header>
+      <ion-card-title>Detalles del Viaje</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Conductor:</strong> {{ viaje.conductor }}</p>
+      <p><strong>Destino:</strong> {{ viaje.nombre_destino }}</p>
+      <p><strong>Valor:</strong> ${{ viaje.valor }}</p>
+        <p><strong>Pasajeros:</strong> {{ viaje.pasajeros?.join(', ') }}</p>
+      <p><strong>Estado del Viaje:</strong> Pendiente</p>
+    </ion-card-content>
+    <ion-button (click)="cancelarReserva(viaje.id)" expand="block" fill="clear" shape="round">
+      Cancelar Reserva
+    </ion-button>
+  </ion-card>
+</ion-content>
+
+
+<ion-content *ngIf="viajes.length === 0">
+  <p style="text-align: center;">No tienes reservas realizadas.</p>
+</ion-content>

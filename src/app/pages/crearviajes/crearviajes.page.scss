@@ -1,0 +1,78 @@
+
+.map-container {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+}
+
+#map_html {
+    height: 400px; /* Puedes ajustar este valor */
+    width: 100%;
+    color: black;
+  }
+
+
+  ion-content {
+    --background: linear-gradient(to right, rgb(236, 187, 51), rgb(194, 87, 16), rgb(194, 86, 28));
+  }
+  
+  ion-card {
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px; /* Limita el ancho máximo del card */
+  }
+  
+  ion-card-header {
+    border-bottom: 2px solid rgba(252, 237, 237, 0.1);
+    padding: 10px 0; /* Agrega espacio interno para el header */
+    margin-bottom:20px; /* Para agregar margen a los titulos como detalles del auto, info personal, lista de usuarios*/
+  }
+  
+  ion-card-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    color: #ffffff; 
+  }
+  
+  ion-button{
+    margin-top: 16px;
+  }
+
+  
+  ion-label {
+    margin-bottom: 10px; /* Espacio debajo de las etiquetas */
+    background-color: transparent;
+  }
+  
+  
+
+  
+  ion-item {
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    }
+
+  
+    
+
+
+  
+     
+  ion-item-option {
+    --background: transparent; 
+    --color: var(--ion-color-warning);
+    --border-radius: 8px; 
+    --padding: 8px 12px; 
+  }
+  
+
+  ion-icon{
+    margin-right:5px;
+  }

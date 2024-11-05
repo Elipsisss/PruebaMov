@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-menu-button color="dark" slot="start"></ion-menu-button>
+    <ion-title>Viajes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-input type="text" labelPlacement="floating" label="Conductor"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-input type="text" labelPlacement="floating" label="Filtra tu comuna"></ion-input>
+  </ion-item>
+
+  <ion-list>
+      <div *ngFor="let viaje of viajes">
+        <div *ngIf="viaje.estado_viaje == 'pendiente'">
+          <ion-item>
+            <ion-label>
+              <p>Conductor: {{ viaje.conductor }}</p>
+              <p>Destino: {{ viaje.nombre_destino }}</p>
+              <p>Asientos disponibles: {{viaje.asientos_disp}}</p>
+              <p>Valor: ${{ viaje.valor }}</p>
+            </ion-label>
+            <ion-button slot="end" (click)="tomarReserva(viaje.id)" color="warning" >Reservar</ion-button>
+          </ion-item>
+        </div>
+      </div>
+
+  </ion-list>
+</ion-content>
+
+
+
+

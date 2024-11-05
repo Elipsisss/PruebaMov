@@ -1,0 +1,158 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title>Administracion</ion-title>
+    <ion-buttons slot="start">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" size-md="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Información Personal</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <br>
+            <form [formGroup]="persona" (ngSubmit)="registrar()">
+              <ion-input formControlName="nombre" type="text" label="Nombre" fill="solid"
+                labelPlacement="floating"></ion-input>
+              <ion-input formControlName="apellido" type="text" fill="solid" labelPlacement="floating"
+                label="Apellido"></ion-input>
+
+              <ion-input formControlName="rut" placeholder="Sin punto con guion" type="text" fill="solid"
+                labelPlacement="floating" label="RUT"></ion-input>
+              <ion-label position="stacked">Fecha de Nacimiento</ion-label><ion-input formControlName="fecha_nacimiento"
+                type="date" fill="solid"></ion-input>
+              <ion-note slot="end" color="danger" *ngIf="persona.controls.fecha_nacimiento.errors?.['invalidAge']">
+                Debes ser mayor de 18 años.
+              </ion-note>
+              <ion-input formControlName="email" placeholder="@duocuc.cl" type="email" label="Correo" fill="solid"
+                labelPlacement="floating"></ion-input>
+              <ion-input formControlName="password" placeholder="Mayor a 8 digitos" type="password" label="Password"
+                fill="solid" labelPlacement="floating"></ion-input>
+
+              <ion-select formControlName="genero" label="Genero" labelPlacement="floating" fill="solid">
+                <ion-select-option value="Masculino">Masculino</ion-select-option>
+                <ion-select-option value="Femenino">Femenino</ion-select-option>
+                <ion-select-option value="Otro">Otro</ion-select-option>
+              </ion-select>
+
+              <ion-select formControlName="sede" label="Sede Duoc" labelPlacement="floating" fill="solid">
+                <ion-select-option value="Alameda">Alameda</ion-select-option>
+                <ion-select-option value="Antonio Varas">Antonio Varas</ion-select-option>
+                <ion-select-option value="Arauco">Arauco</ion-select-option>
+                <ion-select-option value="Concepción">Concepción</ion-select-option>
+                <ion-select-option value="Maipú">Maipú</ion-select-option>
+                <ion-select-option value="Melipilla">Melipilla</ion-select-option>
+                <ion-select-option value="Padre Alonso de Ovalle">Padre Alonso de Ovalle</ion-select-option>
+                <ion-select-option value="Plaza Oeste">Plaza Oeste</ion-select-option>
+                <ion-select-option value="Plaza Vespucio">Plaza Vespucio</ion-select-option>
+                <ion-select-option value="Plaza Norte">Plaza Norte</ion-select-option>
+                <ion-select-option value="Puente Alto">Puente Alto</ion-select-option>
+                <ion-select-option value="San Bernardo">San Bernardo</ion-select-option>
+                <ion-select-option value="San Carlos de Apoquindo">San Carlos de Apoquindo</ion-select-option>
+                <ion-select-option value="San Joaquín">San Joaquín</ion-select-option>
+                <ion-select-option value="Valparaíso">Valparaíso</ion-select-option>
+                <ion-select-option value="Viña del Mar">Viña del Mar</ion-select-option>
+                <ion-select-option value="Villarica">Villarica</ion-select-option>
+                <ion-select-option value="Puerto Montt">Puerto Montt</ion-select-option>
+              </ion-select>
+
+              <ion-label>¿Tiene Auto?</ion-label>
+
+              <ion-radio-group formControlName="tiene_auto">
+                <ion-item>
+                  <ion-radio slot="start" value="si"></ion-radio>
+                  <ion-label>Sí</ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-radio slot="start" value="No"></ion-radio>
+                  <ion-label>No</ion-label>
+                </ion-item>
+
+                <ion-col size="12" size-md="6" *ngIf="persona.controls.tiene_auto.value === 'si'">
+                  <ion-card class="auto-details-card">
+                    <ion-card-header>
+                      <ion-card-title>Detalles del Auto</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <form [formGroup]="persona" (ngSubmit)="registrar()">
+                        <ion-input formControlName="marca_auto" type="text" label="Marca Auto" fill="solid"
+                          labelPlacement="floating"></ion-input>
+                        <ion-text *ngIf="persona.controls.marca_auto.errors?.['marcaNoExiste']">
+                          <p></p>
+                        </ion-text>
+
+                        <ion-input formControlName="patente" type="text" label="Patente" fill="solid"
+                          labelPlacement="floating"></ion-input>
+                        <ion-text color="danger" *ngIf="persona.controls.patente.errors?.['pattern']">
+                          <p>La patente debe ser válida (formato:ABCD12)</p>
+                        </ion-text>
+                        <ion-input formControlName="asientos_disp" type="number" label="Asientos Disp." fill="solid"
+                          labelPlacement="floating"></ion-input>
+                      </form>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+
+              </ion-radio-group>
+              <br>
+              <ion-label>Tipo de usuario</ion-label>
+              <ion-radio-group formControlName="role">
+                <ion-item>
+                  <ion-radio slot="start" value="administrador"></ion-radio>
+                  <ion-label>Administrador</ion-label>
+                </ion-item>
+                <ion-item>
+                  <ion-radio slot="start" value="usuario"></ion-radio>
+                  <ion-label>Usuario</ion-label>
+                </ion-item>
+              </ion-radio-group>
+
+              <ion-button [disabled]="persona.invalid" type="submit" size="block" color="warning">REGISTRAR</ion-button>
+
+              <ion-button type="reset" size="block" color="primary">Limpiar</ion-button>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+
+
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Lista de Usuarios</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item-sliding *ngFor="let usuario of usuarios">
+                <ion-item>
+                  <p>Rut: {{ usuario.rut }} </p>
+                  <p>Nombre: {{ usuario.nombre }} {{usuario.apellido }} </p>
+                  <p>Auto: {{ usuario.tiene_auto }}</p>
+                </ion-item>
+                <ion-item-options side="end">
+                  <ion-item-option (click)="buscar(usuario)">
+                    <ion-icon name="create"></ion-icon>
+                    Modificar
+                  </ion-item-option>
+                  <ion-item-option (click)="confirmarEliminacion(usuario.rut)">
+                    <ion-icon name="trash"></ion-icon>
+                    Eliminar
+                  </ion-item-option>
+                </ion-item-options>
+              </ion-item-sliding>
+              <ion-button [disabled]="persona.invalid" (click)="modificar()" type="submit" size="block"
+                color="warning">Modificar</ion-button>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

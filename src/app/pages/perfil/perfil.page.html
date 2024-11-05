@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title>Perfil</ion-title>
+    <ion-buttons slot="start">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Detalles del Usuario</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Nombre <br> {{usuario?.nombre }}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Apellido <br> {{usuario?.apellido }}</ion-label>
+      </ion-item>
+
+
+
+      <ion-item>
+        <ion-label>Correo Electrónico <br> {{usuario?.email}}</ion-label>
+      </ion-item>
+
+
+
+
+
+      <ion-item>
+        <ion-label>Género <br> {{usuario?.genero}}</ion-label>
+        <ion-select [(ngModel)]="tempGenero" placeholder="Selecciona tu género" *ngIf="siEditaGenero">
+          <ion-select-option value="Masculino">Masculino</ion-select-option>
+          <ion-select-option value="Femenino">Femenino</ion-select-option>
+          <ion-select-option value="Otro">Otro</ion-select-option>
+        </ion-select>
+        <ion-button *ngIf="!siEditaGenero" (click)="siEditaGenero = true">Editar</ion-button>
+        <ion-button *ngIf="siEditaGenero" (click)="modificarGenero()" style="    --background: linear-gradient(to right, #55fa6b, #05dbe2);
+    --background-hover: linear-gradient(to right, #e6b800, #b71c1c);">Guardar</ion-button>
+        <ion-button *ngIf="siEditaGenero" (click)="cancelarEdicionGenero()" style="    --background: linear-gradient(to right, #B54F39, #f71000);
+    --background-hover: linear-gradient(to right, #e6b800, #b71c1c);">Cancelar</ion-button>
+      </ion-item>
+
+
+
+
+
+
+      <ion-item>
+        <ion-label>Fecha de Nacimiento <br>{{usuario?.fecha_nacimiento | date:'dd/MM/yyyy' }}</ion-label>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Sede <br> {{usuario?.sede}}</ion-label>
+        <ion-select [(ngModel)]="tempSede" placeholder="Selecciona tu sede" *ngIf="siEditaSede">
+          <ion-select-option value="Alameda">Alameda</ion-select-option>
+          <ion-select-option value="Antonio Varas">Antonio Varas</ion-select-option>
+          <ion-select-option value="Arauco">Arauco</ion-select-option>
+          <ion-select-option value="Concepción">Concepción</ion-select-option>
+          <ion-select-option value="Maipú">Maipú</ion-select-option>
+          <ion-select-option value="Melipilla">Melipilla</ion-select-option>
+          <ion-select-option value="Padre Alonso de Ovalle">Padre Alonso de Ovalle</ion-select-option>
+          <ion-select-option value="Plaza Oeste">Plaza Oeste</ion-select-option>
+          <ion-select-option value="Plaza Vespucio">Plaza Vespucio</ion-select-option>
+          <ion-select-option value="Plaza Norte">Plaza Norte</ion-select-option>
+          <ion-select-option value="Puente Alto">Puente Alto</ion-select-option>
+          <ion-select-option value="San Bernardo">San Bernardo</ion-select-option>
+          <ion-select-option value="San Carlos de Apoquindo">San Carlos de Apoquindo</ion-select-option>
+          <ion-select-option value="San Joaquín">San Joaquín</ion-select-option>
+          <ion-select-option value="Valparaíso">Valparaíso</ion-select-option>
+          <ion-select-option value="Viña del Mar">Viña del Mar</ion-select-option>
+          <ion-select-option value="Villarica">Villarica</ion-select-option>
+          <ion-select-option value="Puerto Montt">Puerto Montt</ion-select-option>
+          </ion-select>
+          <ion-button *ngIf="!siEditaSede" (click)="siEditaSede = true">Editar</ion-button>
+          <ion-button *ngIf="siEditaSede" (click)="modificarSede()"style="    --background: linear-gradient(to right, #55fa6b, #05dbe2);
+    --background-hover: linear-gradient(to right, #e6b800, #b71c1c);">Guardar</ion-button>
+          <ion-button *ngIf="siEditaSede" (click)="cancelarEdicionSede()" style="    --background: linear-gradient(to right, #B54F39, #f71000);
+    --background-hover: linear-gradient(to right, #e6b800, #b71c1c);">Cancelar</ion-button>
+      </ion-item>
+
+      <ion-item *ngIf="usuario?.tiene_auto?.toLowerCase() === 'si'">
+        <ion-label>Marca del Auto <br> {{usuario?.marca_auto}}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario?.tiene_auto?.toLowerCase() === 'si'">
+        <ion-label>Patente <br> {{usuario?.patente}}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="usuario?.tiene_auto?.toLowerCase() === 'si'">
+        <ion-label>Asientos Disponibles <br> {{usuario?.asientos_disp}}</ion-label>
+      </ion-item>
+
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+
