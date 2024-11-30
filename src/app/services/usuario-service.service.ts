@@ -13,6 +13,10 @@ export class UsuarioService {
   }
 
   async init() {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      this.usuarioAutenticado = JSON.parse(userData);
+    }
   }
 
   // Crea un usuario en Firestore
@@ -82,28 +86,37 @@ export class UsuarioService {
   // Actualiza un usuario en Firestore
   public async updateUsuario(rut: string, nuevoUsuario: any): Promise<boolean> {
     try {
-      const usuariosSnapshot = await this.firestore.collection('usuarios', ref => ref.where('rut', '==', rut)).get().toPromise();
+      // Buscar documentos donde el campo 'rut' coincida
+      const usuariosSnapshot = await this.firestore.collection('Usuarios', ref => ref.where('rut', '==', rut)).get().toPromise();
       if (!usuariosSnapshot || usuariosSnapshot.empty) {
+        console.error(`No se encontró ningún usuario con el rut: ${rut}`);
         return false;
       }
+  
+      // Obtener el ID del documento a actualizar
       const docId = usuariosSnapshot.docs[0].id;
-      await this.firestore.collection('usuarios').doc(docId).update(nuevoUsuario);
+  
+      // Actualizar el documento con los nuevos datos
+      await this.firestore.collection('Usuarios').doc(docId).update(nuevoUsuario);
+  
+      console.log(`Usuario con rut ${rut} actualizado correctamente.`);
       return true;
     } catch (error) {
-      console.error('Error al actualizar usuario:', error);
+      console.error('Error al actualizar usuario en Firestore:', error);
       return false;
     }
   }
+  
 
   // Elimina un usuario en Firestore
   public async deleteUsuario(rut: string): Promise<boolean> {
     try {
-      const usuariosSnapshot = await this.firestore.collection('usuarios', ref => ref.where('rut', '==', rut)).get().toPromise();
+      const usuariosSnapshot = await this.firestore.collection('Usuarios', ref => ref.where('rut', '==', rut)).get().toPromise();
       if (!usuariosSnapshot || usuariosSnapshot.empty) {
         return false;
       }
       const docId = usuariosSnapshot.docs[0].id;
-      await this.firestore.collection('usuarios').doc(docId).delete();
+      await this.firestore.collection('Usuarios').doc(docId).delete();
       return true;
     } catch (error) {
       console.error('Error al eliminar usuario:', error);
@@ -149,13 +162,27 @@ export class UsuarioService {
   // Obtiene el usuario autenticado
   public async getUsuarioAutenticado(): Promise<any | null> {
     if (!this.usuarioAutenticado) {
-      const userData = localStorage.getItem('user');
-      if (userData) {
-        this.usuarioAutenticado = JSON.parse(userData);
+      const user = await this.afAuth.currentUser;
+      console.log("usuario", user);
+      if (user) {
+        console.log("usuario", user);
+        const usuarioId = user.uid;
+        const usuarioRef = this.firestore.collection('Usuarios').doc(usuarioId);
+        
+        // Convertimos el Observable a promesa para acceder al DocumentSnapshot
+        const usuarioDoc = await usuarioRef.get().toPromise();
+  
+        // Verificamos que 'usuarioDoc' no sea undefined o null y que exista
+        if (usuarioDoc && usuarioDoc.exists && usuarioDoc.data()) {
+          this.usuarioAutenticado = usuarioDoc.data();
+          console.log("usuario autenticado", this.usuarioAutenticado);
+        }
       }
     }
     return this.usuarioAutenticado;
   }
+  
+
 
   // Muestra todos los usuarios (para debug)
   public logUsuarios() {

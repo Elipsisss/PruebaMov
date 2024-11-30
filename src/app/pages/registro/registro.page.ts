@@ -88,7 +88,7 @@ export class RegistroPage implements OnInit {
     });
     await alert.present();
   }
-
+  
   async submit() {
     if (this.user.valid) {
       const nuevoUsuario = {
