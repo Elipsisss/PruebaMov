@@ -178,7 +178,6 @@ export class UsuarioService {
   
 
 
-  // Muestra todos los usuarios (para debug)
   public logUsuarios() {
     this.getUsuarios().then(usuarios => console.log(usuarios));
   }

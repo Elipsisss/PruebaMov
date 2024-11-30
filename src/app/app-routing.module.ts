@@ -100,7 +100,11 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'e404',
     pathMatch: 'full'
+  },  {
+    path: 'tiempo',
+    loadChildren: () => import('./pages/tiempo/tiempo.module').then( m => m.TiempoPageModule)
   },
+
 
 
 
