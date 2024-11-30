@@ -14,6 +14,11 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'prueba',
+    redirectTo: 'prueba',
+    pathMatch: 'full'
+  },
+  {
     path: 'login',
     redirectTo: 'login',
     pathMatch: 'full'
@@ -90,6 +95,11 @@ const routes: Routes = [
     redirectTo: 'e404',
     pathMatch: 'full'
   },
+  {
+    path: 'prueba',
+    loadChildren: () => import('./pages/prueba/prueba.module').then( m => m.PruebaPageModule)
+  },
+
 
 
 
