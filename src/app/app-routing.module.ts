@@ -95,10 +95,6 @@ const routes: Routes = [
     redirectTo: 'e404',
     pathMatch: 'full'
   },
-  {
-    path: 'prueba',
-    loadChildren: () => import('./pages/prueba/prueba.module').then( m => m.PruebaPageModule)
-  },
 
 
 

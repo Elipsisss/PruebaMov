@@ -17,7 +17,7 @@ export class RegistroPage implements OnInit {
     this.user = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9._%+-]+@duocuc.cl")]),
       nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern("[a-zA-Z]{3,15}")]),
-      apellido: new FormControl('', [Validators.required, Validators.minLength(3),Validators.pattern("[a-zA-Z]{3,15}")]), //se deja solo un apellido dejado, anula los numeros tambien
+      apellido: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern("[a-zA-Z]{3,15}")]),
       rut: new FormControl('', [Validators.required, Validators.pattern(/^\d{6,8}-[kK0-9]$/)]),
       fecha_nacimiento: new FormControl('', [Validators.required, this.anosvalidar(18, 100)]),
       tiene_auto: new FormControl('no', [Validators.required]),
@@ -28,10 +28,8 @@ export class RegistroPage implements OnInit {
       sede: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmpassword: new FormControl('', [Validators.required])
-    }, { validators: this.passwordMatchValidator }); 
+    }, { validators: this.passwordMatchValidator });
   }
-  
-  
 
   marcaAuto: string[] = [
     'abarth', 'acura', 'alfa romeo', 'audi', 'bmw', 'bentley', 'buick', 'cadillac',
@@ -45,22 +43,19 @@ export class RegistroPage implements OnInit {
     'nio', 'ora', 'rivian', 'polestar', 'karma', 'landwind', 'zotye',
     'wuling', 'baojun', 'gac', 'hummer'
   ];
-  
 
   ngOnInit() {
     this.usuarioService.getUsuarios().then(usuarios => {
       this.usuario = usuarios;
     });
   }
+
   // Para que las contraseñas coincidan
   passwordMatchValidator(formGroup: AbstractControl): ValidationErrors | null {
     const password = formGroup.get('password')?.value;
     const confirmPassword = formGroup.get('confirmpassword')?.value;
     return password && confirmPassword && password !== confirmPassword ? { passwordsDoNotMatch: true } : null;
   }
-
-  
-
 
   validarMarcaAuto(control: AbstractControl) {
     const marca = control.value ? control.value.toLowerCase() : '';
@@ -69,7 +64,6 @@ export class RegistroPage implements OnInit {
     }
     return null;
   }
-
 
   anosvalidar(minAge: number, maxAge: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
@@ -86,7 +80,6 @@ export class RegistroPage implements OnInit {
     };
   }
 
-
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header: header,
@@ -96,7 +89,6 @@ export class RegistroPage implements OnInit {
     await alert.present();
   }
 
-  
   async submit() {
     if (this.user.valid) {
       const nuevoUsuario = {
@@ -111,9 +103,9 @@ export class RegistroPage implements OnInit {
         patente: this.user.get('patente')?.value,
         genero: this.user.get('genero')?.value,
         sede: this.user.get('sede')?.value,
-        password: this.user.get('password')?.value
+        password: this.user.get('password')?.value,
       };
-  
+
       // Intenta crear el usuario
       const usuarioCreado = await this.usuarioService.createUsuario(nuevoUsuario);
       if (usuarioCreado) {
