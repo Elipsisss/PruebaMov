@@ -43,16 +43,14 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
   async ngOnInit() {
     await this.obtenerUsuario();
     await this.rescatarViajes();
-    const usuarioStr = localStorage.getItem("user");
-      if (usuarioStr) {
-          this.usuario = JSON.parse(usuarioStr);
-      } else {
-          this.usuario = {}; // O asigna un valor por defecto que consideres apropiado
-      }
-    this.viaje.controls.conductor.setValue(this.usuario.nombre);
-    this.viaje.controls.asientos_disp.setValue(this.usuario.asientos_disp);
+    this.usuario = await this.usuarioService.getUsuarioAutenticado();
+    if (this.usuario) {
+      this.viaje.controls.conductor.setValue(this.usuario.nombre);
+      this.viaje.controls.asientos_disp.setValue(this.usuario.asientos_disp);
+    } else {
+      console.log('Usuario no autenticado');
+    }
   }
-
   /*No funciona el mapa sin este codigo, porque el ngOnInit no carga el espacio del mapa, esta parte carga el
    mapa cuando todas las demas partes de la pagina esten completamente cargadas. */
   ngAfterViewInit() {     
@@ -128,7 +126,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
     if (await this.viajeService.createViaje(this.viaje.value)) {
       const alert = await this.alertController.create({
         header: 'Viaje Creado Exitosamente',
-        message: 'Tu viaje ha sido creado con éxito y está listo para ser utilizado.',
+        message: 'Tu viaje ha sido creado con éxito',
         buttons: ['OK']
       });
       alert.present();
@@ -223,16 +221,29 @@ async confirmarCreaciondeviaje () {
     await alert.present();
   }
 
+   async obtenerUsuario() {
+    this.usuario = await  this.usuarioService.getUsuarioAutenticado();
+  }
+
 
   buscar(viaje: any) {
     this.siEdita = true;
     this.viaje.patchValue(viaje);
+  
+    // Verificar si el mapa está inicializado antes de intentar centrarlo
+    if (this.map) {
+      const lat = viaje.latitud; // Asegúrate de que la latitud esté en el viaje
+      const lon = viaje.longitud; // Asegúrate de que la longitud esté en el viaje
+      
+      // Centrar el mapa en las coordenadas del viaje
+      this.map.setView(new L.LatLng(lat, lon), 16);  // 16 es el zoom deseado
+  
+      // Agregar un marcador en la ubicación
+      L.marker([lat, lon]).addTo(this.map)
+        .bindPopup(`<b>${viaje.nombre_destino}</b>`)
+        .openPopup();
+    }
   }
-
-  async obtenerUsuario() {
-    this.usuario = await this.usuarioService.getUsuarioAutenticado();
-  }
-
 
  /*https://practicatest.cl/preguntas/los-taxis-que-usan-taximetro-como-mecanismo-de-cobro-tarifario-deben-exhibir-en-el-parabrisas-delantero-el-valor-de/Z6Ka#:~:text=Explicaci%C3%B3n,(lo%20que%20ocurra%20primero).
   en base a ese link se hizo el calculo */ 
@@ -262,32 +273,4 @@ async confirmarCreaciondeviaje () {
   cancelarAccion() {
     this.viaje.reset(); 
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
 }

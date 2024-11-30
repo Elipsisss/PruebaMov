@@ -1,130 +1,117 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage-angular';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ViajeService {
-  constructor(private storage: Storage) {
+  constructor(private firestore: AngularFirestore) {
     this.init();
   }
 
-  async init() {
-    await this.storage.create();
-  }
+  async init() {}
 
   public async createViaje(viaje: any): Promise<boolean> {
-    let viajes: any[] = await this.storage.get("viajes") || [];
-    if (viajes.find(v => v.id == viaje.id) != undefined) {
-      return false; 
+    const viajeRef = this.firestore.collection('Viajes').doc(viaje.id || this.firestore.createId()); // Genera un ID si no hay uno
+    const docSnapshot = await viajeRef.get().toPromise();
+    if (docSnapshot && docSnapshot.exists) {
+      return false;
     }
-    viajes.push(viaje);
-    await this.storage.set("viajes", viajes);
+    await viajeRef.set(viaje);
     return true;
   }
-
-  public async getViaje(id: string): Promise<any> {
-    let viajes: any[] = await this.storage.get("viajes") || [];
-    return viajes.find(v => v.id == id);
+  
+  
+  public async getViaje(id: string): Promise<any | null> {
+    const viajeDoc = await this.firestore.collection('Viajes').doc(id).get().toPromise();
+    if (viajeDoc && viajeDoc.exists) {
+      return viajeDoc.data();
+    } else {
+      return null;
+    }
   }
+  
 
   public async getViajes(): Promise<any[]> {
-    let viajes: any[] = await this.storage.get("viajes") || [];
-    return viajes;
+    const viajesSnapshot = await this.firestore.collection('Viajes').get().toPromise();
+    if (viajesSnapshot) {
+      return viajesSnapshot.docs.map(doc => doc.data());
+    } else {
+      return [];
+    }
   }
   
+
+
   public async updateViaje(id: string, nuevoViaje: any): Promise<boolean> {
-    let viajes: any[] = await this.storage.get("viajes") || [];
-    let indice: number = viajes.findIndex(v => v.id == id);
-    if (indice == -1) {
+    const viajeRef = this.firestore.collection('Viajes').doc(id);
+    const docSnapshot = await viajeRef.get().toPromise();
+    if (docSnapshot && docSnapshot.exists) {
+      await viajeRef.update(nuevoViaje);
+      return true;
+    } else {
       return false; 
     }
-    viajes[indice] = nuevoViaje;
-    await this.storage.set("viajes", viajes);
-    return true;
   }
+  
 
   public async deleteViaje(id: string): Promise<boolean> {
-    let viajes: any[] = await this.storage.get("viajes") || [];
-    let indice: number = viajes.findIndex(v => v.id == id);
-    if (indice == -1) {
+    const viajeRef = this.firestore.collection('Viajes').doc(id);
+    const docSnapshot = await viajeRef.get().toPromise();
+  
+    if (docSnapshot && docSnapshot.exists) {
+      await viajeRef.delete();
+      return true;
+    } else {
       return false; 
     }
-    viajes.splice(indice, 1);
-    await this.storage.set("viajes", viajes);
-    return true;
   }
-
-
-
-
-
-
-
-
-
+  
 
   public async agregarPasajero(viajeId: string, pasajero: any): Promise<boolean> {
-    let viajes: any[] = await this.storage.get("viajes") || [];
-    const indice = viajes.findIndex(v => v.id === viajeId);
-
-    if (indice === -1) {
-        return false; 
-    }
+    const viajeRef = this.firestore.collection('Viajes').doc(viajeId);
+    const docSnapshot = await viajeRef.get().toPromise();
   
-    if (!viajes[indice].pasajeros) {
-        viajes[indice].pasajeros = []; 
+    if (docSnapshot && docSnapshot.exists) {
+      const viajeData = docSnapshot.data() as { pasajeros?: any[]; asientos_disp?: number };
+      if (viajeData) {
+        const pasajeros = Array.isArray(viajeData.pasajeros) ? viajeData.pasajeros : [];
+        const asientosDisp = typeof viajeData.asientos_disp === 'number' ? viajeData.asientos_disp : 0;
+        if (asientosDisp > 0) {
+          pasajeros.push(pasajero);
+          await viajeRef.update({
+            asientos_disp: asientosDisp - 1,
+            pasajeros: pasajeros
+          });
+          return true;
+        } else {
+          return false; 
+        }
+      }
     }
+    return false; 
+  }
 
-    
-    if (viajes[indice].asientos_disp > 0) {
-        viajes[indice].asientos_disp -= 1;
-        viajes[indice].pasajeros.push(pasajero);
-        await this.storage.set("viajes", viajes);
-        return true; 
-    } else {
-        return false; 
+  async cancelarReserva(viajeId: string, usuarioRut: string): Promise<boolean> {
+    const viajeRef = this.firestore.collection('Viajes').doc(viajeId);
+    const docSnapshot = await viajeRef.get().toPromise();
+    if (docSnapshot && docSnapshot.exists) {
+      const viajeData = docSnapshot.data() as { pasajeros?: any[]; asientos_disp?: number };
+      if (viajeData) {
+        const pasajeros = Array.isArray(viajeData.pasajeros) ? viajeData.pasajeros : [];
+        const asientosDisp = typeof viajeData.asientos_disp === 'number' ? viajeData.asientos_disp : 0;
+        const pasajeroIndex = pasajeros.indexOf(usuarioRut);
+        if (pasajeroIndex !== -1) {
+          pasajeros.splice(pasajeroIndex, 1);
+          await viajeRef.update({
+            asientos_disp: asientosDisp + 1,
+            pasajeros: pasajeros
+          });
+          return true; 
+        }
+      }
     }
-}
-
-
-
-
-async cancelarReserva(viajeId: string, usuarioRut: string): Promise<boolean> {
-  let viajes: any[] = await this.storage.get("viajes") || [];
-
-  const indice = viajes.findIndex(v => v.id === viajeId);
-  if (indice === -1) return false; 
-  
-  const pasajeros = viajes[indice].pasajeros || [];
-  const pasajeroIndex = pasajeros.indexOf(usuarioRut);
-  
-  if (pasajeroIndex === -1) return false; 
-
- 
-  pasajeros.splice(pasajeroIndex, 1);  // corta el pasajero de la lista y aumenta el número de asientos disponibles
-  viajes[indice].asientos_disp += 1;
-
-  // Guarda cambios 
-  await this.storage.set("viajes", viajes);
-  return true; 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return false; 
+  }
 }
