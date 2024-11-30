@@ -37,10 +37,12 @@ const routes: Routes = [
   {
     path: 'registro',
     loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
-  },  {
+  },   
+  
+  {
     path: 'administration',
-    canActivate: [authGuard],
-    loadChildren: () => import('./pages/administration/administration.module').then( m => m.AdministrationPageModule)
+    canActivate: [authGuard],  
+    loadChildren: () => import('./pages/administration/administration.module').then(m => m.AdministrationPageModule),
   },
 
   {
@@ -89,12 +91,17 @@ const routes: Routes = [
   },
 
 
+  {
+    path: 'pruebaqr',
+    loadChildren: () => import('./pages/pruebaqr/pruebaqr.module').then( m => m.PruebaqrPageModule)
+  },
   
   {
     path: '**',
     redirectTo: 'e404',
     pathMatch: 'full'
   },
+
 
 
 

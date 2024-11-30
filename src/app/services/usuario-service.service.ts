@@ -19,14 +19,13 @@ export class UsuarioService {
     }
   }
 
-  // Crea un usuario en Firestore
+ 
   public async createUsuario(nuevoUsuario: any): Promise<boolean> {
     try {
-      // Crear usuario en Firebase Authentication
       const userCredential = await this.afAuth.createUserWithEmailAndPassword(nuevoUsuario.email, nuevoUsuario.password);
-
-      // Guardar la información adicional del usuario en Firestore
       if (userCredential.user) {
+        const role = nuevoUsuario.role || 'user';  
+  
         await this.firestore.collection('Usuarios').doc(userCredential.user.uid).set({
           email: nuevoUsuario.email,
           nombre: nuevoUsuario.nombre,
@@ -38,24 +37,26 @@ export class UsuarioService {
           asientos_disp: nuevoUsuario.asientos_disp,
           patente: nuevoUsuario.patente,
           genero: nuevoUsuario.genero,
-          sede: nuevoUsuario.sede
+          sede: nuevoUsuario.sede,
+          role: role  
         });
-
-        return true; // Usuario creado exitosamente
+  
+        return true; 
       } else {
-        return false; // No se pudo crear el usuario
+        return false; 
       }
     } catch (error) {
       console.error('Error al crear el usuario', error);
-      return false; // Hubo un error al crear el usuario
+      return false; 
     }
   }
+  
 
   
-  // Obtiene todos los usuarios de Firestore
+
   public async getUsuarios(): Promise<any[]> {
     try {
-      const usuariosSnapshot = await this.firestore.collection('usuarios').get().toPromise();
+      const usuariosSnapshot = await this.firestore.collection('Usuarios').get().toPromise();
       if (!usuariosSnapshot) {
         console.error('No se pudo obtener los usuarios de Firestore.');
         return [];
@@ -70,7 +71,7 @@ export class UsuarioService {
   // Obtiene un usuario específico por rut
   public async getUsuario(rut: string): Promise<any | null> {
     try {
-      const usuariosSnapshot = await this.firestore.collection('usuarios', ref => ref.where('rut', '==', rut)).get().toPromise();
+      const usuariosSnapshot = await this.firestore.collection('Usuarios', ref => ref.where('rut', '==', rut)).get().toPromise();
       if (!usuariosSnapshot || usuariosSnapshot.empty) {
         console.error('Usuario no encontrado o error en Firestore.');
         return null;
@@ -92,11 +93,8 @@ export class UsuarioService {
         console.error(`No se encontró ningún usuario con el rut: ${rut}`);
         return false;
       }
-  
-      // Obtener el ID del documento a actualizar
       const docId = usuariosSnapshot.docs[0].id;
-  
-      // Actualizar el documento con los nuevos datos
+
       await this.firestore.collection('Usuarios').doc(docId).update(nuevoUsuario);
   
       console.log(`Usuario con rut ${rut} actualizado correctamente.`);
@@ -133,7 +131,7 @@ export class UsuarioService {
   
       // Verificar si el usuario se autenticó correctamente
       if (userCredential.user) {
-        console.log(userCredential.user); // Esto muestra el usuario autenticado
+        console.log(userCredential.user);
   
         // Buscar al usuario en la colección "Usuarios" usando el email
         const userDoc = await this.firestore.collection('Usuarios', ref => ref.where('email', '==', email)).get().toPromise();

@@ -61,12 +61,16 @@ export class AppComponent {
     return user.tiene_auto === 'si'; 
   }
 
+  async apotaQr(){
+    this.menu.close();
+    await this.router.navigate(['pruebaqr']);
+    window.location.reload();
+  }
+
    detalleReserva(){
     this.menu.close();
     this.router.navigate(['/detalle-reserva/:id']);
   }
-
-
 
 }
 
