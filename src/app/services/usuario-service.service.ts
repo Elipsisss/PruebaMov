@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class UsuarioService {
   private usuarioAutenticado: any = null;
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(private firestore: AngularFirestore, private afAuth: AngularFireAuth) {
     this.init();
   }
 
@@ -123,21 +124,35 @@ export class UsuarioService {
 
   // Autentica al usuario con email y password
   public async authenticate(email: string, password: string): Promise<boolean> {
+    console.log("el principio de autenticar ");
     try {
-      const usuarios = await this.getUsuarios();
-      const usuario = usuarios.find(user => user.email === email && user.password === password);
-      if (usuario) {
-        this.usuarioAutenticado = usuario;
-        localStorage.setItem('user', JSON.stringify(usuario));
-        return true;
+      console.log("pase por aqui");
+      const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
+  
+      // Verificar si el usuario se autenticó correctamente
+      if (userCredential.user) {
+        console.log(userCredential.user); // Esto muestra el usuario autenticado
+  
+        // Buscar al usuario en la colección "Usuarios" usando el email
+        const userDoc = await this.firestore.collection('Usuarios', ref => ref.where('email', '==', email)).get().toPromise();
+  
+        if (userDoc && !userDoc.empty) {
+  
+          // Usamos los datos del documento encontrado
+          this.usuarioAutenticado = userDoc.docs[0].data();
+          localStorage.setItem('user', JSON.stringify(this.usuarioAutenticado));
+          // Si encontramos el documento, devolvemos true
+          return true;
+        }
       }
+  
+      // Si no encontramos el usuario o la autenticación falló, devolvemos false
       return false;
     } catch (error) {
       console.error('Error al autenticar:', error);
       return false;
     }
   }
-
   // Obtiene el usuario autenticado
   public async getUsuarioAutenticado(): Promise<any | null> {
     if (!this.usuarioAutenticado) {
@@ -154,3 +169,4 @@ export class UsuarioService {
     this.getUsuarios().then(usuarios => console.log(usuarios));
   }
 }
+
