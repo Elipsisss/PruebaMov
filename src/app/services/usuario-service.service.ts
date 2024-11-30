@@ -159,6 +159,9 @@ export class UsuarioService {
       return false;
     }
   }
+
+
+
   // Obtiene el usuario autenticado
   public async getUsuarioAutenticado(): Promise<any | null> {
     if (!this.usuarioAutenticado) {

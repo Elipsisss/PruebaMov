@@ -61,9 +61,7 @@ export class PerfilPage implements OnInit {
       .join(' ');
   }
 
-  // Modifica el género del usuario y lo actualiza en Firestore
-// Modifica el género del usuario y lo actualiza en Firestore
-// Modifica el género del usuario y lo actualiza en Firestore
+
 async modificarGenero() {
   const rut_modificar = this.usuario.rut || ""; 
   this.usuario.genero = this.tempGenero; 
