@@ -13,41 +13,19 @@ export class UsuarioService {
   }
 
   async init() {
-    const admin: any = {
-      email: "admin@duocuc.cl",
-      nombre: "Admin",
-      apellido: "Admin",
-      rut: "16666666-6",
-      fecha_nacimiento: "1990-03-24",
-      tiene_auto: "si",
-      marca_auto: "Toyota",
-      asientos_disp: "4",
-      patente: "XX-XX-00",
-      genero: "Masculino",
-      sede: "Puente Alto",
-      password: "Admin123.",
-      confirmpassword: "Admin123.",
-      role: "admin"
-    };
-  
-
-    const usuarios = await this.getUsuarios();
-  // aaaaaa
-  
-    const adminExistente = usuarios.find(usuario => usuario.role === 'admin');
-    
-    if (!adminExistente) {
-      await this.createUsuario(admin);
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      this.usuarioAutenticado = JSON.parse(userData);
     }
   }
 
-
+  // Crea un usuario en Firestore
   public async createUsuario(nuevoUsuario: any): Promise<boolean> {
     try {
-
+      // Crear usuario en Firebase Authentication
       const userCredential = await this.afAuth.createUserWithEmailAndPassword(nuevoUsuario.email, nuevoUsuario.password);
 
-
+      // Guardar la información adicional del usuario en Firestore
       if (userCredential.user) {
         await this.firestore.collection('Usuarios').doc(userCredential.user.uid).set({
           email: nuevoUsuario.email,
@@ -60,25 +38,24 @@ export class UsuarioService {
           asientos_disp: nuevoUsuario.asientos_disp,
           patente: nuevoUsuario.patente,
           genero: nuevoUsuario.genero,
-          sede: nuevoUsuario.sede,
-          role: nuevoUsuario.role || 'user'
+          sede: nuevoUsuario.sede
         });
 
-        return true; 
+        return true; // Usuario creado exitosamente
       } else {
-        return false; 
+        return false; // No se pudo crear el usuario
       }
     } catch (error) {
       console.error('Error al crear el usuario', error);
-      return false; 
+      return false; // Hubo un error al crear el usuario
     }
   }
 
   
-
+  // Obtiene todos los usuarios de Firestore
   public async getUsuarios(): Promise<any[]> {
     try {
-      const usuariosSnapshot = await this.firestore.collection('Usuarios').get().toPromise();
+      const usuariosSnapshot = await this.firestore.collection('usuarios').get().toPromise();
       if (!usuariosSnapshot) {
         console.error('No se pudo obtener los usuarios de Firestore.');
         return [];
@@ -90,7 +67,7 @@ export class UsuarioService {
     }
   }
 
-
+  // Obtiene un usuario específico por rut
   public async getUsuario(rut: string): Promise<any | null> {
     try {
       const usuariosSnapshot = await this.firestore.collection('usuarios', ref => ref.where('rut', '==', rut)).get().toPromise();
@@ -106,15 +83,20 @@ export class UsuarioService {
     }
   }
 
-
+  // Actualiza un usuario en Firestore
   public async updateUsuario(rut: string, nuevoUsuario: any): Promise<boolean> {
     try {
+      // Buscar documentos donde el campo 'rut' coincida
       const usuariosSnapshot = await this.firestore.collection('Usuarios', ref => ref.where('rut', '==', rut)).get().toPromise();
       if (!usuariosSnapshot || usuariosSnapshot.empty) {
         console.error(`No se encontró ningún usuario con el rut: ${rut}`);
         return false;
       }
+  
+      // Obtener el ID del documento a actualizar
       const docId = usuariosSnapshot.docs[0].id;
+  
+      // Actualizar el documento con los nuevos datos
       await this.firestore.collection('Usuarios').doc(docId).update(nuevoUsuario);
   
       console.log(`Usuario con rut ${rut} actualizado correctamente.`);
@@ -126,7 +108,7 @@ export class UsuarioService {
   }
   
 
-
+  // Elimina un usuario en Firestore
   public async deleteUsuario(rut: string): Promise<boolean> {
     try {
       const usuariosSnapshot = await this.firestore.collection('Usuarios', ref => ref.where('rut', '==', rut)).get().toPromise();
@@ -142,28 +124,42 @@ export class UsuarioService {
     }
   }
 
-
+  // Autentica al usuario con email y password
   public async authenticate(email: string, password: string): Promise<boolean> {
+    console.log("el principio de autenticar ");
     try {
+      console.log("pase por aqui");
       const userCredential = await this.afAuth.signInWithEmailAndPassword(email, password);
+  
+      // Verificar si el usuario se autenticó correctamente
       if (userCredential.user) {
+        console.log(userCredential.user); // Esto muestra el usuario autenticado
+  
+        // Buscar al usuario en la colección "Usuarios" usando el email
         const userDoc = await this.firestore.collection('Usuarios', ref => ref.where('email', '==', email)).get().toPromise();
   
         if (userDoc && !userDoc.empty) {
+          console.log("encontre, documento");
+  
+          // Usamos los datos del documento encontrado
           this.usuarioAutenticado = userDoc.docs[0].data();
+  
+          // Aquí ya no estamos usando el uid explícitamente, solo estamos usando el email.
           localStorage.setItem('user', JSON.stringify(this.usuarioAutenticado));
+  
+          // Si encontramos el documento, devolvemos true
           return true;
         }
       }
+  
+      // Si no encontramos el usuario o la autenticación falló, devolvemos false
       return false;
     } catch (error) {
+      console.error('Error al autenticar:', error);
       return false;
     }
   }
-
-
-
-
+  // Obtiene el usuario autenticado
   public async getUsuarioAutenticado(): Promise<any | null> {
     if (!this.usuarioAutenticado) {
       const user = await this.afAuth.currentUser;
@@ -184,9 +180,8 @@ export class UsuarioService {
   
 
 
-
+  // Muestra todos los usuarios (para debug)
   public logUsuarios() {
     this.getUsuarios().then(usuarios => console.log(usuarios));
   }
 }
-
