@@ -13,51 +13,40 @@ export class UsuarioService {
   }
 
   async init() {
-    // Aquí puedes crear el admin en Firestore si no existe
-    const admin: any = {
-      email: "admin@duocuc.cl",
-      nombre: "Admin",
-      apellido: "Admin",
-      rut: "16666666-6",
-      fecha_nacimiento: "1990-03-24",
-      tiene_auto: "si",
-      marca_auto: "Toyota",
-      asientos_disp: "4",
-      patente: "XX-XX-00",
-      genero: "Masculino",
-      sede: "Puente Alto",
-      password: "Admin123.",
-      confirmpassword: "Admin123.",
-      role: "admin"
-    };
-
-    const usuarios = await this.getUsuarios();
-    const adminExistente = usuarios.find(usu => usu.email === admin.email);
-    if (!adminExistente) {
-      await this.createUsuario(admin);
-    }
   }
 
   // Crea un usuario en Firestore
-  public async createUsuario(usuario: any): Promise<boolean> {
+  public async createUsuario(nuevoUsuario: any): Promise<boolean> {
     try {
-      const usuariosRef = this.firestore.collection('Usuarios');
-      const usuariosSnapshot = await usuariosRef.get().toPromise();
-      
-      // Tipo explícito para los documentos
-      const usuarios: any[] = usuariosSnapshot?.docs.map(doc => doc.data() as any) || [];
-  
-      if (usuarios.find(usu => usu.rut === usuario.rut || usu.email === usuario.email)) {
-        return false;
+      // Crear usuario en Firebase Authentication
+      const userCredential = await this.afAuth.createUserWithEmailAndPassword(nuevoUsuario.email, nuevoUsuario.password);
+
+      // Guardar la información adicional del usuario en Firestore
+      if (userCredential.user) {
+        await this.firestore.collection('Usuarios').doc(userCredential.user.uid).set({
+          email: nuevoUsuario.email,
+          nombre: nuevoUsuario.nombre,
+          apellido: nuevoUsuario.apellido,
+          rut: nuevoUsuario.rut,
+          fecha_nacimiento: nuevoUsuario.fecha_nacimiento,
+          tiene_auto: nuevoUsuario.tiene_auto,
+          marca_auto: nuevoUsuario.marca_auto,
+          asientos_disp: nuevoUsuario.asientos_disp,
+          patente: nuevoUsuario.patente,
+          genero: nuevoUsuario.genero,
+          sede: nuevoUsuario.sede
+        });
+
+        return true; // Usuario creado exitosamente
+      } else {
+        return false; // No se pudo crear el usuario
       }
-  
-      await usuariosRef.add(usuario);
-      return true;
     } catch (error) {
-      console.error('Error al crear usuario:', error);
-      return false;
+      console.error('Error al crear el usuario', error);
+      return false; // Hubo un error al crear el usuario
     }
   }
+
   
   // Obtiene todos los usuarios de Firestore
   public async getUsuarios(): Promise<any[]> {
@@ -137,10 +126,14 @@ export class UsuarioService {
         const userDoc = await this.firestore.collection('Usuarios', ref => ref.where('email', '==', email)).get().toPromise();
   
         if (userDoc && !userDoc.empty) {
+          console.log("encontre, documento");
   
           // Usamos los datos del documento encontrado
           this.usuarioAutenticado = userDoc.docs[0].data();
+  
+          // Aquí ya no estamos usando el uid explícitamente, solo estamos usando el email.
           localStorage.setItem('user', JSON.stringify(this.usuarioAutenticado));
+  
           // Si encontramos el documento, devolvemos true
           return true;
         }
