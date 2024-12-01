@@ -19,6 +19,35 @@ export class UsuarioService {
     }
   }
 
+  // async init() {
+  //   const admin: any = {
+  //     email: "admin@duocuc.cl",
+  //     nombre: "Admin",
+  //     apellido: "Admin",
+  //     rut: "16666666-6",
+  //     fecha_nacimiento: "1990-03-24",
+  //     tiene_auto: "si",
+  //     marca_auto: "Toyota",
+  //     asientos_disp: "4",
+  //     patente: "XX-XX-00",
+  //     genero: "Masculino",
+  //     sede: "Puente Alto",
+  //     password: "Admin123.",
+  //     confirmpassword: "Admin123.",
+  //     role: "admin"
+  //   };
+  
+  //   const usuarios = await this.getUsuarios();
+  // // aaaaaa
+  
+  //   const adminExistente = usuarios.find(usuario => usuario.role === 'admin');
+    
+  //   if (!adminExistente) {
+  //     await this.createUsuario(admin);
+  //   }
+  // }
+
+
  
   public async createUsuario(nuevoUsuario: any): Promise<boolean> {
     try {

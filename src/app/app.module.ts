@@ -24,7 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule ,
-    HttpClientModule],
+    HttpClientModule,
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 

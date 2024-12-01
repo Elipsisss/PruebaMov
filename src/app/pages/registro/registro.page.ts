@@ -71,11 +71,11 @@ export class RegistroPage implements OnInit {
       const today = new Date();
       let age = today.getFullYear() - fecha_nacimiento.getFullYear();
       const monthDiff = today.getMonth() - fecha_nacimiento.getMonth();
-
+  
       if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < fecha_nacimiento.getDate())) {
         age--;
       }
-
+  
       return (age >= minAge && age <= maxAge) ? null : { 'invalidAge': true };
     };
   }

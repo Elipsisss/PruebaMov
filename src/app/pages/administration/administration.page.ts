@@ -27,7 +27,7 @@ export class AdministrationPage implements OnInit {
 
   usuarios: any[] = [];
 
-  constructor(private alertController: AlertController, private usuarioService: UsuarioService) {}
+  constructor(private alertController: AlertController, public usuarioService: UsuarioService) {}
 
   marcasAuto: string[] = [
     'abarth', 'acura', 'alfa romeo', 'audi', 'bmw', 'bentley', 'buick', 'cadillac',
@@ -63,7 +63,7 @@ export class AdministrationPage implements OnInit {
 
   async confirmarEliminacion(rut: string) {
     const alert = await this.alertController.create({
-      header: 'Eliminar usuario',
+      header: 'Confirmar eliminación',
       message: '¿Estás seguro de que deseas eliminar este usuario?',
       buttons: [
         {
@@ -72,21 +72,23 @@ export class AdministrationPage implements OnInit {
         },
         {
           text: 'Eliminar',
-          handler: () => {
-            this.eliminar(rut);
+          handler: async () => {
+            await this.eliminar(rut);
           },
         },
       ],
     });
-
+  
     await alert.present();
   }
-
-
+  
   async eliminar(rut: string) {
     const success = await this.usuarioService.deleteUsuario(rut);
     if (success) {
-      await this.actualizarUsuarios(); 
+      await this.actualizarUsuarios();
+      await this.presentAlert('Éxito', 'Usuario eliminado correctamente');
+    } else {
+      await this.presentAlert('Error', 'No se pudo eliminar el usuario');
     }
   }
 

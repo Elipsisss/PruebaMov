@@ -67,6 +67,18 @@ export class AppComponent {
     window.location.reload();
   }
 
+
+
+  async tiempoAPI(){
+    this.menu.close();
+    await this.router.navigate(['tiempo']);
+    window.location.reload();
+  }
+
+
+
+
+
    detalleReserva(){
     this.menu.close();
     this.router.navigate(['/detalle-reserva/:id']);

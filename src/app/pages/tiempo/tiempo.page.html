@@ -1,16 +1,34 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>tiempo</ion-title>
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title>Tiempo</ion-title>
+    <ion-buttons slot="start">
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <div id="TT_JyT11Ek1Ecaa8eGU7AzDDDDDjWlU1UB2LdEtEci5akD53I3oG">El tiempo - Tutiempo.net</div>
-      <ion-toolbar></ion-toolbar>p>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
 
-<script type="text/javascript" src="https://www.tutiempo.net/s-widget/l_JyT11Ek1Ecaa8eGU7AzDDDDDjWlU1UB2LdEtEci5akD53I3oG"></script>
+<ion-content>
+  <!-- Card para mostrar los datos del clima -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Clima de Hoy</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- Verificamos si hay datos de tiempo disponibles -->
+      <div *ngIf="tiempo && tiempo.day1">
+        <p><strong>Fecha:</strong> {{ tiempo.day1.date }}</p>
+        <p><strong>Temperatura Máxima:</strong> {{ tiempo.day1.temperature_max }} ºC</p>
+        <p><strong>Temperatura Mínima:</strong> {{ tiempo.day1.temperature_min }} ºC</p>
+        <p><strong>Condición:</strong> {{ tiempo.day1.text }}</p>
+        <p><strong>Humedad:</strong> {{ tiempo.day1.humidity }} %</p>
+        <p><strong>Viento:</strong> {{ tiempo.day1.wind }} km/h</p>
+      </div>
+
+      <!-- Si no hay datos, mostramos un mensaje de carga -->
+      <div *ngIf="!tiempo || !tiempo.day1">
+        <p>Cargando los datos del clima...</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

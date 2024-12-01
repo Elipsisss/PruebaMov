@@ -13,7 +13,8 @@ import { TiempoPage } from './tiempo.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    TiempoPageRoutingModule
+    TiempoPageRoutingModule,
+    CommonModule 
   ],
   declarations: [TiempoPage]
 })
