@@ -31,6 +31,7 @@ export class CrearviajesPage implements OnInit, AfterViewInit {
     longitud: new FormControl('', [Validators.required]),
     distancia_metros: new FormControl('', [Validators.required]),
     tiempo_minutos: new FormControl(0, [Validators.required]),
+    hora_salida: new FormControl ('', [Validators.required]),
     estado_viaje: new FormControl('pendiente'),
     pasajeros: new FormControl(),
     conductor: new FormControl(),

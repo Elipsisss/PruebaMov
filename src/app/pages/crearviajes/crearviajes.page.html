@@ -44,6 +44,10 @@
             <ion-input formControlName="tiempo_minutos" type="text"></ion-input>
           </ion-item>
 
+          <ion-item>
+            <ion-input id="hora_salida" formControlName="hora_salida" type="time" fill="floating" labelPlacement="floating" label="Hora de Salida"></ion-input>
+          </ion-item>
+
           <br>
           <div>
             <ion-button [disabled]="viaje.invalid || siEdita" expand="full" type="submit" color="warning">Registrar

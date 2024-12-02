@@ -22,9 +22,10 @@
               <p>Conductor: {{ viaje.conductor }}</p>
               <p>Destino: {{ viaje.nombre_destino }}</p>
               <p>Asientos disponibles: {{viaje.asientos_disp}}</p>
-              <p>Valor: ${{ viaje.valor }}</p>¨
+              <p>Hora salida: {{viaje.hora_salida}}</p>
+              <p>Valor: ${{ viaje.valor }}</p>
               <div *ngIf="monea">
-                <p>El valor en Dolares: <strong> ${{ (viaje.valor / monea.dolar.valor).toFixed(3) }}</strong></p>
+                <p>El valor en Dolares: <strong> ${{ (viaje.valor / monea.dolar.valor).toFixed(2) }}</strong></p>
               </div>
             </ion-label>
 

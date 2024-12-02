@@ -21,6 +21,10 @@
             <p>Destino: {{ viaje.nombre_destino }}</p>
             <p>Valor: ${{ viaje.valor }}</p>
             <p>Pasajeros: {{ viaje.pasajeros}}</p> <!-- Muestra la cantidad de pasajeros -->
+            <p><strong>Hora salida:</strong> {{ viaje.hora_salida }}</p>
+            <div *ngIf="monea">
+              <p>El valor en Dolares: ${{ (viaje.valor / monea.dolar.valor).toFixed(2) }}</p>
+            </div>
           </ion-label>
         </ion-item>
       </div>
