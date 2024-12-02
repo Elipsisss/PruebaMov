@@ -1,0 +1,28 @@
+
+ion-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; 
+    flex-direction: column;
+  }
+  
+
+  .imagen-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+
+  ion-toolbar {
+    justify-content: center;
+  }
+  
+
+  ion-button {
+    margin-top: 20px; 
+    align-self: center; 
+  }
+  

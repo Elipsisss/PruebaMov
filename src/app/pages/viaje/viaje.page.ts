@@ -11,16 +11,23 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class ViajePage implements OnInit {
   viajes: any[] = [];
-  usuario: any;
+  usuario: any = null;
   usuarioReservado: boolean = false;
   monea: any = {};
 
-  constructor(private apiService: ApiService, private viajeService: ViajeService, private usuarioService: UsuarioService,     private router: Router, private route: ActivatedRoute ) { }
+  constructor(
+    private apiService: ApiService,
+    private viajeService: ViajeService,
+    private usuarioService: UsuarioService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   async ngOnInit() {
-    await this.Datos();
-    await this.desactivarRecurrente()
-    await this.getMonea()
+    await this.cargarDatosUsuario();
+    await this.cargarViajes();
+    this.filtrarViajesNoRecurrentes();
+    this.getMonea();
   }
 
   async getMonea() {
@@ -36,40 +43,71 @@ export class ViajePage implements OnInit {
   }
 
 
-
-  async Datos() {
-    this.viajes = await this.viajeService.getViajes();
-    this.usuario = JSON.parse(localStorage.getItem("user") || '');
-  }
-  // Método para obtener los indicadores diarios
-
-
-
-  async tomarReserva(viajeId: string) {
-    if (viajeId) {
+  // Carga los datos del usuario desde el localStorage
+  private async cargarDatosUsuario() {
+    const usuarioData = localStorage.getItem('user');
+    if (usuarioData) {
       try {
-        const viaje = this.viajes.find(v => v.id === viajeId);
-        this.usuarioReservado = viaje?.pasajeros?.some((p: string) => p === this.usuario.rut) || false;
-  
-        if (this.usuarioReservado) {
-          this.showAlert('Reserva duplicada', 'Ya has reservado este viaje.');
-          return; 
-        }
-        const agregado = await this.viajeService.agregarPasajero(viajeId, this.usuario.rut);
-        if (agregado) {
-          this.showAlert('Reserva exitosa', 'Reserva realizada con éxito.');
-          this.router.navigate(['/detalle-reserva', viajeId]);
-        } else {
-          this.showAlert('Error', 'No se pudo realizar la reserva. Inténtalo de nuevo.');
-        }
+        this.usuario = JSON.parse(usuarioData);
       } catch (error) {
-        console.error('Error al reservar el viaje:', error);
-        this.showAlert('Error', 'Ocurrió un error al reservar el viaje. Inténtalo de nuevo.');
+        console.error('Error al parsear el usuario:', error);
       }
     }
   }
 
-  private async showAlert(header: string, message: string) {
+  // Carga la lista de viajes desde el servicio
+  private async cargarViajes() {
+    try {
+      this.viajes = await this.viajeService.getViajes();
+    } catch (error) {
+      console.error('Error al cargar viajes:', error);
+    }
+  }
+
+  // Filtra los viajes para excluir los recurrentes del mismo conductor
+  private filtrarViajesNoRecurrentes() {
+    if (this.usuario && this.usuario.nombre) {
+      this.viajes = this.viajes.filter(viaje => viaje.conductor !== this.usuario.nombre);
+    }
+  }
+
+  // Realiza una reserva en un viaje específico
+  async tomarReserva(viajeId: string) {
+    if (!viajeId) {
+      this.mostrarAlerta('Error', 'El ID del viaje no es válido.');
+      return;
+    }
+
+    try {
+      const viaje = this.viajes.find(v => v.id === viajeId);
+      if (!viaje) {
+        this.mostrarAlerta('Error', 'El viaje no existe.');
+        return;
+      }
+
+      // Verifica si el usuario ya está reservado
+      const yaReservado = viaje.pasajeros?.some((p: string) => p === this.usuario.rut);
+      if (yaReservado) {
+        this.mostrarAlerta('Reserva duplicada', 'Ya has reservado este viaje.');
+        return;
+      }
+
+      // Agrega al usuario como pasajero
+      const reservaExitosa = await this.viajeService.agregarPasajero(viajeId, this.usuario.rut);
+      if (reservaExitosa) {
+        this.mostrarAlerta('Reserva exitosa', 'Tu reserva ha sido realizada con éxito.');
+        this.router.navigate(['/detalle-reserva', viajeId]);
+      } else {
+        this.mostrarAlerta('Error', 'No se pudo realizar la reserva. Inténtalo nuevamente.');
+      }
+    } catch (error) {
+      console.error('Error al tomar reserva:', error);
+      this.mostrarAlerta('Error', 'Ocurrió un error al procesar tu reserva.');
+    }
+  }
+
+  // Muestra un mensaje de alerta
+  private async mostrarAlerta(header: string, message: string) {
     const alert = document.createElement('ion-alert');
     alert.header = header;
     alert.message = message;
@@ -78,16 +116,4 @@ export class ViajePage implements OnInit {
     document.body.appendChild(alert);
     await alert.present();
   }
-
-
-
-
-
-  async desactivarRecurrente() {
-    this.viajes = await this.viajeService.getViajes(); 
-    this.viajes = this.viajes.filter(viaje => viaje.conductor != this.usuario.nombre);
-  }
-
-
-
 }

@@ -22,12 +22,13 @@
               <p>Conductor: {{ viaje.conductor }}</p>
               <p>Destino: {{ viaje.nombre_destino }}</p>
               <p>Asientos disponibles: {{viaje.asientos_disp}}</p>
-              <p>Valor: ${{ viaje.valor }}</p>
-
+              <p>Valor: ${{ viaje.valor }}</p>¨
               <div *ngIf="monea">
-                <p>El valor actual de la UF es: <strong> ${{ monea.uf.valor }}</strong></p>
+                <p>El valor en Dolares: <strong> ${{ (viaje.valor / monea.dolar.valor).toFixed(3) }}</strong></p>
               </div>
             </ion-label>
+
+
             <ion-button slot="end" (click)="tomarReserva(viaje.id)" color="warning" >Reservar</ion-button>
           </ion-item>
         </div>
